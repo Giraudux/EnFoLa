@@ -4,20 +4,32 @@ import java.util.Collection;
  * @author Alexis Giraudet
  * @date 17/10/16
  */
-public interface Configuration extends Component, Connector {
-    Collection<Component> getComponents();
+public abstract class Configuration extends ArchitecturalObject {
+    private Collection<ArchitecturalObject> architecturalObjects;
+    private Collection<Attachment> attachments;
+    private Collection<Binding> bindings;
 
-    void setComponents(Collection<Component> components);
+    public Collection<ArchitecturalObject> getArchitecturalObjects() {
+        return architecturalObjects;
+    }
 
-    Collection<Connector> getConnectors();
+    public void setArchitecturalObjects(Collection<ArchitecturalObject> architecturalObjects) {
+        this.architecturalObjects = architecturalObjects;
+    }
 
-    void setConnectors(Collection<Connector> connectors);
+    public Collection<Attachment> getAttachments() {
+        return attachments;
+    }
 
-    Collection<Attachment> getAttachments();
+    public void setAttachments(Collection<Attachment> attachments) {
+        this.attachments = attachments;
+    }
 
-    void setAttachments(Collection<Attachment> attachments);
+    public Collection<Binding> getBindings() {
+        return bindings;
+    }
 
-    Collection<Binding> getBindings();
-
-    void setBindings(Collection<Binding> bindings);
+    public void setBindings(Collection<Binding> bindings) {
+        this.bindings = bindings;
+    }
 }

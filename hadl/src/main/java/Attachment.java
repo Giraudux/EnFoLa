@@ -2,20 +2,20 @@
  * @author Alexis Giraudet
  * @date 17/10/16
  */
-public interface Attachment {
-    SentRole getSentRole();
+public class Attachment {
+    void attach(SentRole sentRole, ReceivedComponentPort receivedComponentPort) {
+        ;
+    }
 
-    void setSentRole(SentRole sentRole);
+    void attach(ReceivedComponentPort receivedComponentPort, SentRole sentRole) {
+        ;
+    }
 
-    ReceivedRole getReceivedRole();
+    void attach(ReceivedRole receivedRole, SentComponentPort sentComponentPort) {
+        ;
+    }
 
-    void setReceivedRole(ReceivedRole receivedRole);
-
-    SentComponentPort getSentComponentPort();
-
-    void setSentComponentPort(SentComponentPort sentComponentPort);
-
-    ReceivedComponentPort getReceivedComponentPort();
-
-    void setReceivedComponentPort(ReceivedComponentPort receivedComponentPort);
+    void attach(SentComponentPort sentComponentPort, ReceivedRole receivedRole) {
+        ;
+    }
 }

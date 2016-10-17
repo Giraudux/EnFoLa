@@ -4,8 +4,14 @@ import java.util.Collection;
  * @author Alexis Giraudet
  * @date 17/10/16
  */
-public interface Glue {
-    Collection<Role> getRoles();
+public abstract class Glue {
+    private Collection<Role> roles;
 
-    void setRoles(Collection<Role> roles);
+    public Collection<Role> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(Collection<Role> roles) {
+        this.roles = roles;
+    }
 }

@@ -4,12 +4,23 @@ import java.util.Collection;
  * @author Alexis Giraudet
  * @date 17/10/16
  */
-public interface Connector extends ArchitecturalObject {
-    Collection<Property> getProperties();
+public abstract class Connector extends ArchitecturalObject {
+    private Collection<Glue> glues;
+    private Collection<Role> roles;
 
-    void setProperties(Collection<Property> properties);
+    public Collection<Glue> getGlues() {
+        return glues;
+    }
 
-    Collection<Constraint> getConstraints();
+    public void setGlues(Collection<Glue> glues) {
+        this.glues = glues;
+    }
 
-    void getConstraints(Collection<Constraint> constraints);
+    public Collection<Role> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(Collection<Role> roles) {
+        this.roles = roles;
+    }
 }

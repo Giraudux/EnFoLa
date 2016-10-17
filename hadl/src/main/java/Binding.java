@@ -2,20 +2,20 @@
  * @author Alexis Giraudet
  * @date 17/10/16
  */
-public interface Binding {
-    ReceivedComponentPort getReceivedComponentPort();
+public class Binding {
+    void bind(SentConfigurationPort sentConfigurationPort, ReceivedComponentPort receivedComponentPort) {
+        ;
+    }
 
-    void setReceivedComponentPort(ReceivedComponentPort receivedComponentPort);
+    void bind(ReceivedComponentPort receivedComponentPort, SentConfigurationPort sentConfigurationPort) {
+        ;
+    }
 
-    SentComponentPort getSentComponentPort();
+    void bind(ReceivedConfigurationPort receivedConfigurationPort, SentComponentPort sentComponentPort) {
+        ;
+    }
 
-    void setSentComponentPort(SentComponentPort sentComponentPort);
-
-    ReceivedConfigurationPort getReceivedConfigurationPort();
-
-    void setReceivedConfigurationPort(ReceivedConfigurationPort receivedConfigurationPort);
-
-    SentConfigurationPort getSentConfigurationPort();
-
-    void setSentConfigurationPort(SentConfigurationPort sentConfigurationPort);
+    void bind(SentComponentPort sentComponentPort, ReceivedConfigurationPort receivedConfigurationPort) {
+        ;
+    }
 }

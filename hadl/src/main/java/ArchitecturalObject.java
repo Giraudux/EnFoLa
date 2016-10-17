@@ -4,13 +4,32 @@ import java.util.Collection;
  * @author Alexis Giraudet
  * @date 17/10/16
  */
-public interface ArchitecturalObject {
+public abstract class ArchitecturalObject {
+    private Collection<Interface> interfaces;
+    private Collection<Property> properties;
+    private Collection<Constraint> constraints;
 
-    String getName();
+    public Collection<Interface> getInterfaces() {
+        return interfaces;
+    }
 
-    void setName(String name);
+    public void setInterfaces(Collection<Interface> interfaces) {
+        this.interfaces = interfaces;
+    }
 
-    Collection<Interface> getInterfaces();
+    public Collection<Property> getProperties() {
+        return properties;
+    }
 
-    void setInterfaces(Collection<Interface> interfaces);
+    public void setProperties(Collection<Property> properties) {
+        this.properties = properties;
+    }
+
+    public Collection<Constraint> getConstraints() {
+        return constraints;
+    }
+
+    public void setConstraints(Collection<Constraint> constraints) {
+        this.constraints = constraints;
+    }
 }
