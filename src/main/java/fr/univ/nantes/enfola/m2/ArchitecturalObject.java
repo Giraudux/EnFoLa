@@ -1,4 +1,4 @@
-package fr.univ.nantes.enfola.m0;
+package fr.univ.nantes.enfola.m2;
 
 import java.util.Collection;
 
@@ -6,6 +6,7 @@ import java.util.Collection;
  * @author Alexis Giraudet
  * @date 17/10/16
  */
+
 public abstract class ArchitecturalObject {
     private Collection<Interface> interfaces;
     private Collection<Property> properties;

@@ -1,4 +1,4 @@
-package fr.univ.nantes.enfola.m0;
+package fr.univ.nantes.enfola.m2;
 
 import java.util.Collection;
 
