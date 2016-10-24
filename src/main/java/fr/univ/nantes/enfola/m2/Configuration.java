@@ -19,19 +19,19 @@ public abstract class Configuration extends ArchitecturalObject {
         return architecturalObjects.remove(architecturalObject);
     }
 
-    public void bind(RequiredComponentPort requiredComponentPort, RequiredConfigurationPort requiredConfigurationPort) {
+    public void bind(PortComponentRequired requiredComponentPort, PortConfigurationRequired requiredConfigurationPort) {
         ;
     }
 
-    public void bind(ProvidedComponentPort providedComponentPort, ProvidedConfigurationPort providedConfigurationPort) {
+    public void bind(PortComponentProvided providedComponentPort, PortConfigurationProvided providedConfigurationPort) {
         ;
     }
 
-    public void attach(ProvidedComponentPort providedComponentPort, RequiredRole requiredRole) {
+    public void attach(PortComponentProvided providedComponentPort, RoleRequired requiredRole) {
         ;
     }
 
-    public void attach(RequiredComponentPort requiredComponentPort, ProvidedRole providedRole) {
+    public void attach(PortComponentRequired requiredComponentPort, RoleProvided providedRole) {
         ;
     }
 }
