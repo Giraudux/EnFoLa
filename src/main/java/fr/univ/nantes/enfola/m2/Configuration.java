@@ -6,7 +6,13 @@ import java.util.Collection;
  * @author Alexis Giraudet
  * @date 17/10/16
  */
-public abstract class Configuration extends ArchitecturalObject {
+public class Configuration extends ArchitecturalObject {
+    public static final class Friend {
+        private Friend() {
+        }
+    }
+
+    private static final Friend friend = new Friend();
     private Collection<ArchitecturalObject> architecturalObjects; // components and connectors
     private Collection attachments;
     private Collection bindings;
@@ -19,19 +25,19 @@ public abstract class Configuration extends ArchitecturalObject {
         return architecturalObjects.remove(architecturalObject);
     }
 
-    public void bind(PortComponentRequired requiredComponentPort, PortConfigurationRequired requiredConfigurationPort) {
+    public <T> void bind(PortComponentRequired<T> requiredComponentPort, PortConfigurationRequired<T> requiredConfigurationPort) {
         ;
     }
 
-    public void bind(PortComponentProvided providedComponentPort, PortConfigurationProvided providedConfigurationPort) {
+    public <T> void bind(PortComponentProvided<T> providedComponentPort, PortConfigurationProvided<T> providedConfigurationPort) {
         ;
     }
 
-    public void attach(PortComponentProvided providedComponentPort, RoleRequired requiredRole) {
+    public <T> void attach(PortComponentProvided<T> providedComponentPort, RoleRequired<T> requiredRole) {
         ;
     }
 
-    public void attach(PortComponentRequired requiredComponentPort, RoleProvided providedRole) {
+    public <T> void attach(PortComponentRequired<T> requiredComponentPort, RoleProvided<T> providedRole) {
         ;
     }
 }
