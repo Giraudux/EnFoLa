@@ -6,7 +6,13 @@ import java.util.Collection;
  * @author Alexis Giraudet
  * @date 17/10/16
  */
-public abstract class Connector extends ArchitecturalObject {
+public abstract class Connector implements ArchitecturalObject {
+    public static final class Friend {
+        private Friend() {}
+    }
+
+    private static final Friend friend = new Friend();
+
     private Collection<Glue> glues;
     private Collection<Role> roles;
 

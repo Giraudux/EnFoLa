@@ -16,4 +16,6 @@ public abstract class Glue {
     public void setRoles(Collection<Role> roles) {
         this.roles = roles;
     }
+
+    public abstract Object process(Object o);
 }
