@@ -1,21 +1,10 @@
 package fr.univ.nantes.enfola.m2;
 
-import java.util.Collection;
-
 /**
  * @author Alexis Giraudet
  * @date 17/10/16
  */
-public abstract class Glue {
-    private Collection<Role> roles;
+public abstract class Glue<R, W> {
 
-    public Collection<Role> getRoles() {
-        return roles;
-    }
-
-    public void setRoles(Collection<Role> roles) {
-        this.roles = roles;
-    }
-
-    public abstract Object process(Object o);
+    public abstract W process(R r);
 }

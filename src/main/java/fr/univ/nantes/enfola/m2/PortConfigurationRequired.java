@@ -10,6 +10,7 @@ import java.util.Observer;
 public class PortConfigurationRequired<T> extends Observable implements Observer, PortConfiguration<T> {
     private static final Friend friend = new Friend();
     private Configuration configuration;
+
     public PortConfigurationRequired() {
         super();
 

@@ -9,6 +9,7 @@ public class RoleRequired<T> implements Role<T> {
     private static final Friend friend = new Friend();
     private final Connector connector;
     private Configuration configuration;
+
     public RoleRequired(Connector connector) {
         super();
 

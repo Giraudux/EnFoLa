@@ -11,6 +11,7 @@ public abstract class Component implements ArchitecturalObject {
     private static final Friend friend = new Friend();
     private Collection<PortComponentProvided> portComponentProvideds;
     private Collection<PortComponentRequired> portComponentRequireds;
+
     protected Component() {
         portComponentProvideds = new ArrayList<PortComponentProvided>();
         portComponentRequireds = new ArrayList<PortComponentRequired>();

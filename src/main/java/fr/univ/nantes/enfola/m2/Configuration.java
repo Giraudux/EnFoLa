@@ -13,6 +13,7 @@ public class Configuration implements ArchitecturalObject {
     private Map<PortConfigurationRequired, PortComponentRequired> bindings2;
     private Map<PortComponentProvided, RoleRequired> attachments1;
     private Map<RoleProvided, PortComponentRequired> attachments2;
+
     protected Configuration() {
         bindings1 = new HashMap<PortComponentProvided, PortConfigurationProvided>();
         bindings2 = new HashMap<PortConfigurationRequired, PortComponentRequired>();

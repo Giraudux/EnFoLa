@@ -9,6 +9,7 @@ public class PortComponentRequired<T> implements PortComponent<T> {
     private static final Friend friend = new Friend();
     private final Component component;
     private Configuration configuration;
+
     protected PortComponentRequired(Component component) {
         super();
 

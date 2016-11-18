@@ -9,6 +9,7 @@ public class PortComponentProvided<T> implements PortComponent<T> {
     private static final Friend friend = new Friend();
     private final Component component;
     private Configuration configuration;
+
     protected PortComponentProvided(Component component) {
         super();
 
