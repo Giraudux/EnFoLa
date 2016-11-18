@@ -1,5 +1,6 @@
 package fr.univ.nantes.enfola.m2;
 
+import java.util.ArrayList;
 import java.util.Collection;
 
 /**
@@ -7,28 +8,37 @@ import java.util.Collection;
  * @date 17/10/16
  */
 public abstract class Connector implements ArchitecturalObject {
-    public static final class Friend {
-        private Friend() {}
-    }
-
     private static final Friend friend = new Friend();
-
     private Collection<Glue> glues;
-    private Collection<Role> roles;
-
-    public Collection<Glue> getGlues() {
-        return glues;
+    private Collection<RoleProvided> roleProvideds;
+    private Collection<RoleRequired> roleRequireds;
+    protected Connector() {
+        roleProvideds = new ArrayList<RoleProvided>();
+        roleRequireds = new ArrayList<RoleRequired>();
     }
 
-    public void setGlues(Collection<Glue> glues) {
-        this.glues = glues;
+    public final <T> void addRoleProvided(RoleProvided.Friend friend, RoleProvided<T> roleProvided) {
+        friend.hashCode();
+
+        roleProvideds.add(roleProvided);
     }
 
-    public Collection<Role> getRoles() {
-        return roles;
+    public final <T> void addRoleRequired(RoleRequired.Friend friend, RoleRequired<T> roleRequired) {
+        friend.hashCode();
+
+        roleRequireds.add(roleRequired);
     }
 
-    public void setRoles(Collection<Role> roles) {
-        this.roles = roles;
+    public final <T> void read(RoleRequired.Friend friend, RoleRequired<T> RoleRequired, T t) {
+        friend.hashCode();
+
+        if (roleRequireds.contains(roleProvideds)) {
+            //TODO call the glue
+        }
+    }
+
+    public static final class Friend {
+        private Friend() {
+        }
     }
 }

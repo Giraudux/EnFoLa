@@ -4,5 +4,5 @@ package fr.univ.nantes.enfola.m2;
  * @author Alexis Giraudet
  * @date 17/10/16
  */
-public interface Port extends Interface {
+public interface Port<T> extends Interface<T> {
 }
