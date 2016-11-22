@@ -13,6 +13,8 @@ public abstract class Component implements ArchitecturalObject {
     private Collection<PortComponentRequired> portComponentRequireds;
 
     protected Component() {
+        super();
+
         portComponentProvideds = new ArrayList<PortComponentProvided>();
         portComponentRequireds = new ArrayList<PortComponentRequired>();
     }

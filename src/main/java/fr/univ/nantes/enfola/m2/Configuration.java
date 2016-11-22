@@ -15,6 +15,8 @@ public abstract class Configuration implements ArchitecturalObject {
     private Map<RoleProvided, PortComponentRequired> attachments2;
 
     protected Configuration() {
+        super();
+
         bindings1 = new HashMap<PortComponentProvided, PortConfigurationProvided>();
         bindings2 = new HashMap<PortConfigurationRequired, PortComponentRequired>();
         attachments1 = new HashMap<PortComponentProvided, RoleRequired>();
@@ -26,7 +28,7 @@ public abstract class Configuration implements ArchitecturalObject {
      * @param portComponentRequired
      * @param <T>
      */
-    public final <T> void bind(PortConfigurationRequired<T> portConfigurationRequired, PortComponentRequired<T> portComponentRequired) {
+    protected final <T> void bind(PortConfigurationRequired<T> portConfigurationRequired, PortComponentRequired<T> portComponentRequired) {
         bindings2.put(portConfigurationRequired, portComponentRequired);
         portConfigurationRequired.setConfiguration(friend, this);
         portComponentRequired.setConfiguration(friend, this);
@@ -37,7 +39,7 @@ public abstract class Configuration implements ArchitecturalObject {
      * @param portConfigurationProvided
      * @param <T>
      */
-    public final <T> void bind(PortComponentProvided<T> portComponentProvided, PortConfigurationProvided<T> portConfigurationProvided) {
+    protected final <T> void bind(PortComponentProvided<T> portComponentProvided, PortConfigurationProvided<T> portConfigurationProvided) {
         bindings1.put(portComponentProvided, portConfigurationProvided);
         portComponentProvided.setConfiguration(friend, this);
         portConfigurationProvided.setConfiguration(friend, this);
@@ -48,7 +50,7 @@ public abstract class Configuration implements ArchitecturalObject {
      * @param roleRequired
      * @param <T>
      */
-    public final <T> void attach(PortComponentProvided<T> portComponentProvided, RoleRequired<T> roleRequired) {
+    protected final <T> void attach(PortComponentProvided<T> portComponentProvided, RoleRequired<T> roleRequired) {
         attachments1.put(portComponentProvided, roleRequired);
         portComponentProvided.setConfiguration(friend, this);
         roleRequired.setConfiguration(friend, this);
@@ -59,7 +61,7 @@ public abstract class Configuration implements ArchitecturalObject {
      * @param portComponentRequired
      * @param <T>
      */
-    public final <T> void attach(RoleProvided<T> roleProvided, PortComponentRequired<T> portComponentRequired) {
+    protected final <T> void attach(RoleProvided<T> roleProvided, PortComponentRequired<T> portComponentRequired) {
         attachments2.put(roleProvided, portComponentRequired);
         roleProvided.setConfiguration(friend, this);
         portComponentRequired.setConfiguration(friend, this);

@@ -8,7 +8,7 @@ public abstract class PortConfigurationRequired<T> implements PortConfiguration<
     private static final Friend friend = new Friend();
     private Configuration configuration;
 
-    public PortConfigurationRequired() {
+    protected PortConfigurationRequired() {
         super();
 
         this.configuration = null;
@@ -21,7 +21,7 @@ public abstract class PortConfigurationRequired<T> implements PortConfiguration<
     /**
      * @param t
      */
-    protected final void write(T t) {
+    public final void write(T t) {
         configuration.read(friend, this, t);
     }
 

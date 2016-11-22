@@ -10,7 +10,7 @@ public class PortComponentRequired<T> implements PortComponent<T> {
     private final Component component;
     private Configuration configuration;
 
-    protected PortComponentRequired(Component component) {
+    public PortComponentRequired(Component component) {
         super();
 
         this.component = component;

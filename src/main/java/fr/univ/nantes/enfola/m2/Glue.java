@@ -10,6 +10,8 @@ public abstract class Glue<R, W> {
     private RoleProvided<W> roleProvided;
 
     protected Glue(Connector connector) {
+        super();
+
         this.connector = connector;
     }
 

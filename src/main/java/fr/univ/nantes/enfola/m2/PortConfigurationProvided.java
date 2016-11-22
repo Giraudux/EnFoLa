@@ -9,7 +9,7 @@ public abstract class PortConfigurationProvided<T> implements PortConfiguration<
     private static final Friend friend = new Friend();
     private Configuration configuration;
 
-    public PortConfigurationProvided() {
+    protected PortConfigurationProvided() {
         super();
 
         this.configuration = null;

@@ -16,6 +16,8 @@ public abstract class Connector implements ArchitecturalObject {
     private Collection<RoleRequired> roleRequireds;
 
     protected Connector() {
+        super();
+
         glues = new HashMap<RoleRequired, Glue>();
         roleProvideds = new ArrayList<RoleProvided>();
         roleRequireds = new ArrayList<RoleRequired>();
@@ -42,7 +44,7 @@ public abstract class Connector implements ArchitecturalObject {
         }
     }
 
-    public final <R, W> void connect(RoleRequired<R> roleRequired, Glue<R, W> glue, RoleProvided<W> roleProvided) {
+    protected final <R, W> void connect(RoleRequired<R> roleRequired, Glue<R, W> glue, RoleProvided<W> roleProvided) {
         if (roleRequireds.contains(roleRequired) && roleProvideds.contains(roleProvided)) {
             glues.put(roleRequired, glue);
             glue.setRoleProvided(friend, this, roleProvided);
