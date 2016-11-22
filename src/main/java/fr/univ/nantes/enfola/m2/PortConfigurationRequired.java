@@ -1,13 +1,10 @@
 package fr.univ.nantes.enfola.m2;
 
-import java.util.Observable;
-import java.util.Observer;
-
 /**
  * @author Alexis Giraudet
  * @date 17/10/16
  */
-public class PortConfigurationRequired<T> extends Observable implements Observer, PortConfiguration<T> {
+public abstract class PortConfigurationRequired<T> implements PortConfiguration<T> {
     private static final Friend friend = new Friend();
     private Configuration configuration;
 
@@ -21,9 +18,11 @@ public class PortConfigurationRequired<T> extends Observable implements Observer
         this.configuration = configuration;
     }
 
-    public final void update(Observable o, Object arg) {
-        setChanged();
-        notifyObservers(arg);
+    /**
+     * @param t
+     */
+    protected final void write(T t) {
+        configuration.read(friend, this, t);
     }
 
     public static final class Friend {

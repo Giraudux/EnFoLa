@@ -9,6 +9,7 @@ public class RoleProvided<T> implements Role<T> {
     private static final Friend friend = new Friend();
     private final Connector connector;
     private Configuration configuration;
+    private Glue glue;
 
     public RoleProvided(Connector connector) {
         super();
@@ -20,13 +21,21 @@ public class RoleProvided<T> implements Role<T> {
     }
 
     public final void setConfiguration(Configuration.Friend friend, Configuration configuration) {
+        friend.hashCode();
+
         this.configuration = configuration;
     }
 
-    public final void read(Connector.Friend friend, Connector connector, T t) {
+    public final void setGlue(Glue.Friend friend, Glue glue) {
         friend.hashCode();
 
-        if (this.connector == connector) {
+        this.glue = glue;
+    }
+
+    public final void read(Glue.Friend friend, Glue glue, T t) {
+        friend.hashCode();
+
+        if (this.glue == glue) {
             configuration.read(RoleProvided.friend, this, t);
         }
     }

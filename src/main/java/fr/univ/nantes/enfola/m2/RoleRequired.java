@@ -20,6 +20,8 @@ public class RoleRequired<T> implements Role<T> {
     }
 
     public final void setConfiguration(Configuration.Friend friend, Configuration configuration) {
+        friend.hashCode();
+
         this.configuration = configuration;
     }
 
@@ -27,7 +29,7 @@ public class RoleRequired<T> implements Role<T> {
         friend.hashCode();
 
         if (this.configuration == configuration) {
-            ;//
+            connector.read(RoleRequired.friend, this, t);
         }
     }
 

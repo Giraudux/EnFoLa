@@ -2,6 +2,7 @@ package fr.univ.nantes.enfola.m2;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -10,12 +11,12 @@ import java.util.Map;
  */
 public abstract class Connector implements ArchitecturalObject {
     private static final Friend friend = new Friend();
-    private Map<RoleRequired, RoleProvided> connections;
     private Map<RoleRequired, Glue> glues;
     private Collection<RoleProvided> roleProvideds;
     private Collection<RoleRequired> roleRequireds;
 
     protected Connector() {
+        glues = new HashMap<RoleRequired, Glue>();
         roleProvideds = new ArrayList<RoleProvided>();
         roleRequireds = new ArrayList<RoleRequired>();
     }
@@ -35,15 +36,17 @@ public abstract class Connector implements ArchitecturalObject {
     public final <T> void read(RoleRequired.Friend friend, RoleRequired<T> roleRequired, T t) {
         friend.hashCode();
 
-        if (roleRequireds.contains(roleProvideds)) {
-            //TODO call the glue
-            connections.get(roleRequired).read(Connector.friend, this, glues.get(roleRequired).process(t));
+        Glue glue = glues.get(roleRequired);
+        if (roleRequireds.contains(roleRequired) && glue != null) {
+            glue.read(Connector.friend, this, t);
         }
     }
 
     public final <R, W> void connect(RoleRequired<R> roleRequired, Glue<R, W> glue, RoleProvided<W> roleProvided) {
-        connections.put(roleRequired, roleProvided);
-        glues.put(roleRequired, glue);
+        if (roleRequireds.contains(roleRequired) && roleProvideds.contains(roleProvided)) {
+            glues.put(roleRequired, glue);
+            glue.setRoleProvided(friend, this, roleProvided);
+        }
     }
 
     public static final class Friend {

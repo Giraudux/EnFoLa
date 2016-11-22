@@ -37,8 +37,18 @@ public abstract class Component implements ArchitecturalObject {
         }
     }
 
+    /**
+     * @param portComponentRequired
+     * @param t
+     * @param <T>
+     */
     protected abstract <T> void read(PortComponentRequired<T> portComponentRequired, T t);
 
+    /**
+     * @param portComponentProvided
+     * @param t
+     * @param <T>
+     */
     protected final <T> void write(PortComponentProvided<T> portComponentProvided, T t) {
         if (portComponentProvideds.contains(portComponentProvided)) {
             portComponentProvided.read(friend, this, t);

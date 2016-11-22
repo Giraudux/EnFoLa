@@ -27,6 +27,9 @@ public abstract class PortConfigurationProvided<T> implements PortConfiguration<
         }
     }
 
+    /**
+     * @param t
+     */
     protected abstract void read(T t);
 
     public static final class Friend {
