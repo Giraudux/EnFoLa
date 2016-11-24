@@ -1,5 +1,8 @@
 package fr.univ.nantes.enfola.m2;
 
+import java.util.ArrayList;
+import java.util.Collection;
+
 /**
  * @author Alexis Giraudet
  * @date 17/10/16
@@ -8,14 +11,18 @@ public abstract class PortConfigurationProvided<T> implements PortConfiguration<
 
     private static final Friend friend = new Friend();
     private Configuration configuration;
+    private Collection<Reader<T>> readers;
 
     protected PortConfigurationProvided() {
         super();
 
         this.configuration = null;
+        readers = new ArrayList<Reader<T>>();
     }
 
     public final void setConfiguration(Configuration.Friend friend, Configuration configuration) {
+        friend.hashCode();
+
         this.configuration = configuration;
     }
 
@@ -23,14 +30,27 @@ public abstract class PortConfigurationProvided<T> implements PortConfiguration<
         friend.hashCode();
 
         if (this.configuration == configuration) {
-            read(t);
+            for (Reader<T> reader : readers) {
+                reader.read(t);
+            }
         }
     }
 
     /**
-     * @param t
+     * @param reader
+     * @return
      */
-    protected abstract void read(T t);
+    public final boolean addReader(Reader<T> reader) {
+        return readers.add(reader);
+    }
+
+    /**
+     * @param reader
+     * @return
+     */
+    public final boolean removeReader(Reader<T> reader) {
+        return readers.remove(reader);
+    }
 
     public static final class Friend {
         private Friend() {

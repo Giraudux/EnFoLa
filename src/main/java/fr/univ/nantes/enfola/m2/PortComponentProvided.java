@@ -20,6 +20,8 @@ public class PortComponentProvided<T> implements PortComponent<T> {
     }
 
     public final void setConfiguration(Configuration.Friend friend, Configuration configuration) {
+        friend.hashCode();
+
         this.configuration = configuration;
     }
 

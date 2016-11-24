@@ -15,14 +15,20 @@ public abstract class PortConfigurationRequired<T> implements PortConfiguration<
     }
 
     public final void setConfiguration(Configuration.Friend friend, Configuration configuration) {
-        this.configuration = configuration;
+        friend.hashCode();
+
+        if (this.configuration != null) {
+            this.configuration = configuration;
+        }
     }
 
     /**
      * @param t
      */
     public final void write(T t) {
-        configuration.read(friend, this, t);
+        if (configuration != null) {
+            configuration.read(friend, this, t);
+        }
     }
 
     public static final class Friend {

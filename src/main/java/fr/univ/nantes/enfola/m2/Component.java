@@ -19,16 +19,28 @@ public abstract class Component implements ArchitecturalObject {
         portComponentRequireds = new ArrayList<PortComponentRequired>();
     }
 
-    public final <T> void addPortComponentProvided(PortComponentProvided.Friend friend, PortComponentProvided<T> portComponentProvided) {
+    public final <T> boolean addPortComponentProvided(PortComponentProvided.Friend friend, PortComponentProvided<T> portComponentProvided) {
         friend.hashCode();
 
-        portComponentProvideds.add(portComponentProvided);
+        return portComponentProvideds.add(portComponentProvided);
     }
 
-    public final <T> void addPortComponentRequired(PortComponentRequired.Friend friend, PortComponentRequired<T> portComponentRequired) {
+    public final <T> boolean addPortComponentRequired(PortComponentRequired.Friend friend, PortComponentRequired<T> portComponentRequired) {
         friend.hashCode();
 
-        portComponentRequireds.add(portComponentRequired);
+        return portComponentRequireds.add(portComponentRequired);
+    }
+
+    public final <T> boolean removePortComponentProvided(PortComponentProvided.Friend friend, PortComponentProvided<T> portComponentProvided) {
+        friend.hashCode();
+
+        return portComponentProvideds.remove(portComponentProvided);
+    }
+
+    public final <T> boolean removePortComponentRequired(PortComponentRequired.Friend friend, PortComponentRequired<T> portComponentRequired) {
+        friend.hashCode();
+
+        return portComponentRequireds.remove(portComponentRequired);
     }
 
     public final <T> void read(PortComponentRequired.Friend friend, PortComponentRequired<T> portComponentRequired, T t) {

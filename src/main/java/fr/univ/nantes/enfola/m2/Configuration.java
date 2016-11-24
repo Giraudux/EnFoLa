@@ -67,6 +67,8 @@ public abstract class Configuration implements ArchitecturalObject {
         portComponentRequired.setConfiguration(friend, this);
     }
 
+    //TODO: unbind/unattach
+
     public final <T> void read(PortComponentProvided.Friend friend, PortComponentProvided<T> portComponentProvided, T t) {
         friend.hashCode();
 

@@ -23,16 +23,28 @@ public abstract class Connector implements ArchitecturalObject {
         roleRequireds = new ArrayList<RoleRequired>();
     }
 
-    public final <T> void addRoleProvided(RoleProvided.Friend friend, RoleProvided<T> roleProvided) {
+    public final <T> boolean addRoleProvided(RoleProvided.Friend friend, RoleProvided<T> roleProvided) {
         friend.hashCode();
 
-        roleProvideds.add(roleProvided);
+        return roleProvideds.add(roleProvided);
     }
 
-    public final <T> void addRoleRequired(RoleRequired.Friend friend, RoleRequired<T> roleRequired) {
+    public final <T> boolean addRoleRequired(RoleRequired.Friend friend, RoleRequired<T> roleRequired) {
         friend.hashCode();
 
-        roleRequireds.add(roleRequired);
+        return roleRequireds.add(roleRequired);
+    }
+
+    public final <T> boolean removeRoleProvided(RoleProvided.Friend friend, RoleProvided<T> roleProvided) {
+        friend.hashCode();
+
+        return roleProvideds.remove(roleProvided);
+    }
+
+    public final <T> boolean removeRoleRequired(RoleRequired.Friend friend, RoleRequired<T> roleRequired) {
+        friend.hashCode();
+
+        return roleRequireds.remove(roleRequired);
     }
 
     public final <T> void read(RoleRequired.Friend friend, RoleRequired<T> roleRequired, T t) {
