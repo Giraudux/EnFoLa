@@ -1,4 +1,4 @@
-package fr.univ.nantes.enfola.m1.component.database;
+package fr.univ.nantes.enfola.m1.component;
 
 import fr.univ.nantes.enfola.m2.Component;
 import fr.univ.nantes.enfola.m2.PortComponentProvided;

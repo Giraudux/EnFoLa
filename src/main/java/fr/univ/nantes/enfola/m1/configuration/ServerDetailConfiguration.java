@@ -1,7 +1,7 @@
 package fr.univ.nantes.enfola.m1.configuration;
 
-import fr.univ.nantes.enfola.m1.component.connection.ConnectionComponent;
-import fr.univ.nantes.enfola.m1.component.database.DatabaseComponent;
+import fr.univ.nantes.enfola.m1.component.ConnectionComponent;
+import fr.univ.nantes.enfola.m1.component.DatabaseComponent;
 import fr.univ.nantes.enfola.m1.connector.clearance.ClearanceConnector;
 import fr.univ.nantes.enfola.m2.Configuration;
 import fr.univ.nantes.enfola.m2.PortConfigurationProvided;
@@ -15,8 +15,8 @@ import java.util.logging.Logger;
 public class ServerDetailConfiguration extends Configuration {
     private static final Logger LOGGER = Logger.getLogger(ServerDetailConfiguration.class.getName());
 
-    private final PortSocketRequired portSocketIn;
-    private final PortSocketProvided portSocketOut;
+    private final PortConfigurationRequired<String> portSocketIn;
+    private final PortConfigurationProvided<String> portSocketOut;
 
     private ConnectionComponent connectionComponent;
     private DatabaseComponent databaseComponent;
@@ -26,8 +26,8 @@ public class ServerDetailConfiguration extends Configuration {
     public ServerDetailConfiguration() {
         super();
 
-        portSocketIn = new PortSocketRequired();
-        portSocketOut = new PortSocketProvided();
+        portSocketIn = new PortConfigurationRequired<String>();
+        portSocketOut = new PortConfigurationProvided<String>();
 
         connectionComponent = new ConnectionComponent();
         databaseComponent = new DatabaseComponent();
@@ -42,35 +42,5 @@ public class ServerDetailConfiguration extends Configuration {
 
         bind(portSocketIn, connectionComponent.getPortSocketIn());
         bind(databaseComponent.getPortSQLOut(), portSocketOut);
-
-    }
-
-    public static void main(String[] args) {
-        ServerDetailConfiguration serverDetailConfiguration = new ServerDetailConfiguration();
-        serverDetailConfiguration.getPortSocketIn().write("Bonjour la France !");
-    }
-
-    public PortSocketRequired getPortSocketIn() {
-        return portSocketIn;
-    }
-
-    public PortSocketProvided getPortSocketOut() {
-        return portSocketOut;
-    }
-
-    public class PortSocketProvided extends PortConfigurationProvided<String> {
-        public PortSocketProvided() {
-            super();
-        }
-
-        protected void read(String s) {
-            LOGGER.info(s);
-        }
-    }
-
-    public class PortSocketRequired extends PortConfigurationRequired<String> {
-        public PortSocketRequired() {
-            super();
-        }
     }
 }
