@@ -7,13 +7,13 @@ import java.util.Collection;
  * @author Alexis Giraudet
  * @date 17/10/16
  */
-public abstract class PortConfigurationProvided<T> implements PortConfiguration<T> {
+public class PortConfigurationProvided<T> implements PortConfiguration<T> {
 
     private static final Friend friend = new Friend();
     private Configuration configuration;
     private Collection<Reader<T>> readers;
 
-    protected PortConfigurationProvided() {
+    public PortConfigurationProvided() {
         super();
 
         this.configuration = null;

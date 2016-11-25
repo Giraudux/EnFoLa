@@ -4,11 +4,11 @@ package fr.univ.nantes.enfola.m2;
  * @author Alexis Giraudet
  * @date 17/10/16
  */
-public abstract class PortConfigurationRequired<T> implements PortConfiguration<T> {
+public class PortConfigurationRequired<T> implements Writer<T>, PortConfiguration<T> {
     private static final Friend friend = new Friend();
     private Configuration configuration;
 
-    protected PortConfigurationRequired() {
+    public PortConfigurationRequired() {
         super();
 
         this.configuration = null;
