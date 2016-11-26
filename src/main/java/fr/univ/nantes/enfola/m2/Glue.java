@@ -2,19 +2,27 @@ package fr.univ.nantes.enfola.m2;
 
 /**
  * @author Alexis Giraudet
- * @date 17/10/16
+ * @author Pierre Gaultier
  */
 public abstract class Glue<R, W> {
     private static final Friend friend = new Friend();
     private final Connector connector;
     private RoleProvided<W> roleProvided;
 
+    /**
+     * @param connector
+     */
     protected Glue(Connector connector) {
         super();
 
         this.connector = connector;
     }
 
+    /**
+     * @param friend
+     * @param connector
+     * @param roleProvided
+     */
     public final void setRoleProvided(Connector.Friend friend, Connector connector, RoleProvided<W> roleProvided) {
         friend.hashCode();
 
@@ -24,6 +32,11 @@ public abstract class Glue<R, W> {
         }
     }
 
+    /**
+     * @param friend
+     * @param connector
+     * @param r
+     */
     public final void read(Connector.Friend friend, Connector connector, R r) {
         friend.hashCode();
 
@@ -32,8 +45,15 @@ public abstract class Glue<R, W> {
         }
     }
 
+    /**
+     * @param r
+     * @return
+     */
     protected abstract W transform(R r);
 
+    /**
+     *
+     */
     public static final class Friend {
         private Friend() {
         }

@@ -5,7 +5,7 @@ import java.util.Map;
 
 /**
  * @author Alexis Giraudet
- * @date 17/10/16
+ * @author Pierre Gaultier
  */
 public abstract class Configuration implements ArchitecturalObject {
     private static final Friend friend = new Friend();
@@ -14,6 +14,9 @@ public abstract class Configuration implements ArchitecturalObject {
     private Map<PortComponentProvided, RoleRequired> attachments1;
     private Map<RoleProvided, PortComponentRequired> attachments2;
 
+    /**
+     *
+     */
     protected Configuration() {
         super();
 
@@ -24,14 +27,38 @@ public abstract class Configuration implements ArchitecturalObject {
     }
 
     /**
+     * @param portComponentProvided
+     * @param portConfigurationProvided
+     * @param <T>
+     */
+    protected final <T> void bind(PortComponentProvided<T> portComponentProvided, PortConfigurationProvided<T> portConfigurationProvided) {
+        if (portComponentProvided != null && portConfigurationProvided != null && !bindings1.containsKey(portComponentProvided) && !bindings1.containsValue(portConfigurationProvided)) {
+            bindings1.put(portComponentProvided, portConfigurationProvided);
+            portComponentProvided.setConfiguration(friend, this);
+            portConfigurationProvided.setConfiguration(friend, this);
+        }
+    }
+
+    /**
      * @param portConfigurationRequired
      * @param portComponentRequired
      * @param <T>
      */
     protected final <T> void bind(PortConfigurationRequired<T> portConfigurationRequired, PortComponentRequired<T> portComponentRequired) {
-        bindings2.put(portConfigurationRequired, portComponentRequired);
-        portConfigurationRequired.setConfiguration(friend, this);
-        portComponentRequired.setConfiguration(friend, this);
+        if (portConfigurationRequired != null && portComponentRequired != null && !bindings2.containsKey(portConfigurationRequired) && !bindings2.containsValue(portComponentRequired)) {
+            bindings2.put(portConfigurationRequired, portComponentRequired);
+            portConfigurationRequired.setConfiguration(friend, this);
+            portComponentRequired.setConfiguration(friend, this);
+        }
+    }
+
+    /**
+     * @param portConfigurationRequired
+     * @param portComponentRequired
+     * @param <T>
+     */
+    protected final <T> void unbind(PortConfigurationRequired<T> portConfigurationRequired, PortComponentRequired<T> portComponentRequired) {
+        //TODO
     }
 
     /**
@@ -39,10 +66,8 @@ public abstract class Configuration implements ArchitecturalObject {
      * @param portConfigurationProvided
      * @param <T>
      */
-    protected final <T> void bind(PortComponentProvided<T> portComponentProvided, PortConfigurationProvided<T> portConfigurationProvided) {
-        bindings1.put(portComponentProvided, portConfigurationProvided);
-        portComponentProvided.setConfiguration(friend, this);
-        portConfigurationProvided.setConfiguration(friend, this);
+    protected final <T> void unbind(PortComponentProvided<T> portComponentProvided, PortConfigurationProvided<T> portConfigurationProvided) {
+        //TODO
     }
 
     /**
@@ -51,9 +76,11 @@ public abstract class Configuration implements ArchitecturalObject {
      * @param <T>
      */
     protected final <T> void attach(PortComponentProvided<T> portComponentProvided, RoleRequired<T> roleRequired) {
-        attachments1.put(portComponentProvided, roleRequired);
-        portComponentProvided.setConfiguration(friend, this);
-        roleRequired.setConfiguration(friend, this);
+        if (portComponentProvided != null && roleRequired != null && !attachments1.containsKey(portComponentProvided) && !attachments1.containsValue(roleRequired)) {
+            attachments1.put(portComponentProvided, roleRequired);
+            portComponentProvided.setConfiguration(friend, this);
+            roleRequired.setConfiguration(friend, this);
+        }
     }
 
     /**
@@ -62,13 +89,37 @@ public abstract class Configuration implements ArchitecturalObject {
      * @param <T>
      */
     protected final <T> void attach(RoleProvided<T> roleProvided, PortComponentRequired<T> portComponentRequired) {
-        attachments2.put(roleProvided, portComponentRequired);
-        roleProvided.setConfiguration(friend, this);
-        portComponentRequired.setConfiguration(friend, this);
+        if (roleProvided != null && portComponentRequired != null && !attachments2.containsKey(roleProvided) && !attachments2.containsValue(portComponentRequired)) {
+            attachments2.put(roleProvided, portComponentRequired);
+            roleProvided.setConfiguration(friend, this);
+            portComponentRequired.setConfiguration(friend, this);
+        }
     }
 
-    //TODO: unbind/unattach
+    /**
+     * @param portComponentProvided
+     * @param roleRequired
+     * @param <T>
+     */
+    protected final <T> void detach(PortComponentProvided<T> portComponentProvided, RoleRequired<T> roleRequired) {
+        //TODO
+    }
 
+    /**
+     * @param roleProvided
+     * @param portComponentRequired
+     * @param <T>
+     */
+    protected final <T> void detach(RoleProvided<T> roleProvided, PortComponentRequired<T> portComponentRequired) {
+        //TODO
+    }
+
+    /**
+     * @param friend
+     * @param portComponentProvided
+     * @param t
+     * @param <T>
+     */
     public final <T> void read(PortComponentProvided.Friend friend, PortComponentProvided<T> portComponentProvided, T t) {
         friend.hashCode();
 
@@ -85,6 +136,12 @@ public abstract class Configuration implements ArchitecturalObject {
         }
     }
 
+    /**
+     * @param friend
+     * @param portConfigurationRequired
+     * @param t
+     * @param <T>
+     */
     public final <T> void read(PortConfigurationRequired.Friend friend, PortConfigurationRequired<T> portConfigurationRequired, T t) {
         friend.hashCode();
 
@@ -95,6 +152,12 @@ public abstract class Configuration implements ArchitecturalObject {
         }
     }
 
+    /**
+     * @param friend
+     * @param roleProvided
+     * @param t
+     * @param <T>
+     */
     public final <T> void read(RoleProvided.Friend friend, RoleProvided<T> roleProvided, T t) {
         friend.hashCode();
 
@@ -105,6 +168,9 @@ public abstract class Configuration implements ArchitecturalObject {
         }
     }
 
+    /**
+     *
+     */
     public static final class Friend {
         private Friend() {
         }

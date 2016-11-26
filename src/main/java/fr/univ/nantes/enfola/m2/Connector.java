@@ -7,7 +7,7 @@ import java.util.Map;
 
 /**
  * @author Alexis Giraudet
- * @date 17/10/16
+ * @author Pierre Gaultier
  */
 public abstract class Connector implements ArchitecturalObject {
     private static final Friend friend = new Friend();
@@ -15,6 +15,9 @@ public abstract class Connector implements ArchitecturalObject {
     private Collection<RoleProvided> roleProvideds;
     private Collection<RoleRequired> roleRequireds;
 
+    /**
+     *
+     */
     protected Connector() {
         super();
 
@@ -23,30 +26,60 @@ public abstract class Connector implements ArchitecturalObject {
         roleRequireds = new ArrayList<RoleRequired>();
     }
 
+    /**
+     * @param friend
+     * @param roleProvided
+     * @param <T>
+     * @return
+     */
     public final <T> boolean addRoleProvided(RoleProvided.Friend friend, RoleProvided<T> roleProvided) {
         friend.hashCode();
 
         return roleProvideds.add(roleProvided);
     }
 
+    /**
+     * @param friend
+     * @param roleRequired
+     * @param <T>
+     * @return
+     */
     public final <T> boolean addRoleRequired(RoleRequired.Friend friend, RoleRequired<T> roleRequired) {
         friend.hashCode();
 
         return roleRequireds.add(roleRequired);
     }
 
+    /**
+     * @param friend
+     * @param roleProvided
+     * @param <T>
+     * @return
+     */
     public final <T> boolean removeRoleProvided(RoleProvided.Friend friend, RoleProvided<T> roleProvided) {
         friend.hashCode();
 
         return roleProvideds.remove(roleProvided);
     }
 
+    /**
+     * @param friend
+     * @param roleRequired
+     * @param <T>
+     * @return
+     */
     public final <T> boolean removeRoleRequired(RoleRequired.Friend friend, RoleRequired<T> roleRequired) {
         friend.hashCode();
 
         return roleRequireds.remove(roleRequired);
     }
 
+    /**
+     * @param friend
+     * @param roleRequired
+     * @param t
+     * @param <T>
+     */
     public final <T> void read(RoleRequired.Friend friend, RoleRequired<T> roleRequired, T t) {
         friend.hashCode();
 
@@ -56,6 +89,13 @@ public abstract class Connector implements ArchitecturalObject {
         }
     }
 
+    /**
+     * @param roleRequired
+     * @param glue
+     * @param roleProvided
+     * @param <R>
+     * @param <W>
+     */
     protected final <R, W> void connect(RoleRequired<R> roleRequired, Glue<R, W> glue, RoleProvided<W> roleProvided) {
         if (roleRequireds.contains(roleRequired) && roleProvideds.contains(roleProvided)) {
             glues.put(roleRequired, glue);
@@ -63,6 +103,9 @@ public abstract class Connector implements ArchitecturalObject {
         }
     }
 
+    /**
+     *
+     */
     public static final class Friend {
         private Friend() {
         }

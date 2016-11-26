@@ -2,14 +2,16 @@ package fr.univ.nantes.enfola.m2;
 
 /**
  * @author Alexis Giraudet
- * @date 17/10/16
+ * @author Pierre Gaultier
  */
 public class PortComponentRequired<T> implements PortComponent<T> {
-
     private static final Friend friend = new Friend();
     private final Component component;
     private Configuration configuration;
 
+    /**
+     * @param component
+     */
     public PortComponentRequired(Component component) {
         super();
 
@@ -19,12 +21,21 @@ public class PortComponentRequired<T> implements PortComponent<T> {
         component.addPortComponentRequired(friend, this);
     }
 
+    /**
+     * @param friend
+     * @param configuration
+     */
     public final void setConfiguration(Configuration.Friend friend, Configuration configuration) {
         friend.hashCode();
 
         this.configuration = configuration;
     }
 
+    /**
+     * @param friend
+     * @param configuration
+     * @param t
+     */
     public final void read(Configuration.Friend friend, Configuration configuration, T t) {
         friend.hashCode();
 
@@ -33,6 +44,9 @@ public class PortComponentRequired<T> implements PortComponent<T> {
         }
     }
 
+    /**
+     *
+     */
     public static final class Friend {
         private Friend() {
         }

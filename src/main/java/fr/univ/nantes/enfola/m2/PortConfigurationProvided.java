@@ -5,14 +5,16 @@ import java.util.Collection;
 
 /**
  * @author Alexis Giraudet
- * @date 17/10/16
+ * @author Pierre Gaultier
  */
 public class PortConfigurationProvided<T> implements PortConfiguration<T> {
-
     private static final Friend friend = new Friend();
     private Configuration configuration;
     private Collection<Reader<T>> readers;
 
+    /**
+     *
+     */
     public PortConfigurationProvided() {
         super();
 
@@ -20,12 +22,21 @@ public class PortConfigurationProvided<T> implements PortConfiguration<T> {
         readers = new ArrayList<Reader<T>>();
     }
 
+    /**
+     * @param friend
+     * @param configuration
+     */
     public final void setConfiguration(Configuration.Friend friend, Configuration configuration) {
         friend.hashCode();
 
         this.configuration = configuration;
     }
 
+    /**
+     * @param friend
+     * @param configuration
+     * @param t
+     */
     public final void read(Configuration.Friend friend, Configuration configuration, T t) {
         friend.hashCode();
 
@@ -52,6 +63,9 @@ public class PortConfigurationProvided<T> implements PortConfiguration<T> {
         return readers.remove(reader);
     }
 
+    /**
+     *
+     */
     public static final class Friend {
         private Friend() {
         }
