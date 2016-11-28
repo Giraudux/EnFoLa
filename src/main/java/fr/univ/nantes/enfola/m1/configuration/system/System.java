@@ -12,6 +12,8 @@ import fr.univ.nantes.enfola.m2.PortConfigurationRequired;
  * @author Alexis Giraudet
  */
 public class System extends Configuration {
+    private final PortConfigurationProvided<String> portProvided;
+    private final PortConfigurationRequired<String> portRequired;
     private final PortConfigurationProvided<String> portClientProvided;
     private final PortConfigurationRequired<String> portClientRequired;
     private Client client;
@@ -22,32 +24,40 @@ public class System extends Configuration {
     public System() {
         super();
 
-        portClientProvided = new PortConfigurationProvided<String>();
-        portClientRequired = new PortConfigurationRequired<String>();
+        portProvided = new PortConfigurationProvided<String>(this);
+        portRequired = new PortConfigurationRequired<String>(this);
+        portClientProvided = new PortConfigurationProvided<String>(this);
+        portClientRequired = new PortConfigurationRequired<String>(this);
 
         client = new Client();
         rpc = new Rpc();
         server = new Server();
         serverDetail = new ServerDetail();
 
+        bridge(portProvided, portClientRequired);
+        bridge(portClientProvided, portRequired);
+
         bind(client.getPortSystemProvided(), portClientProvided);
         bind(portClientRequired, client.getPortSystemRequired());
 
+        // Client <=> RPC
         attach(client.getPortRpcProvided(), rpc.getRoleClientRequired());
         attach(rpc.getRoleClientProvided(), client.getPortRpcRequired());
 
+        // RPC <=> Server
         attach(server.getPortRpcProvided(), rpc.getRoleServerRequired());
         attach(rpc.getRoleServerProvided(), server.getPortRpcRequired());
 
-        bind(server.getPortServerDetailProvided(), serverDetail.getPortConnectionManagerProvided());
-        bind(serverDetail.getPortConnectionManagerRequired(), server.getPortServerDetailRequired());
+        // Server <=> ServerDetail
+        bind(server.getPortServerDetailProvided(), serverDetail.getPortProvided());
+        bind(serverDetail.getPortRequired(), server.getPortServerDetailRequired());
     }
 
-    public PortConfigurationProvided<String> getPortClientProvided() {
-        return portClientProvided;
+    public PortConfigurationProvided<String> getPortProvided() {
+        return portProvided;
     }
 
-    public PortConfigurationRequired<String> getPortClientRequired() {
-        return portClientRequired;
+    public PortConfigurationRequired<String> getPortRequired() {
+        return portRequired;
     }
 }

@@ -28,9 +28,9 @@ public class Server extends Component {
     protected <T> void read(PortComponentRequired<T> portComponentRequired, T t) {
         LOGGER.info(t.toString());
 
-        if(portComponentRequired == portRpcRequired) {
+        if (portComponentRequired == portRpcRequired) {
             write(portServerDetailProvided, (String) t);
-        } else if(portComponentRequired == portServerDetailRequired) {
+        } else if (portComponentRequired == portServerDetailRequired) {
             write(portRpcProvided, (String) t);
         }
     }

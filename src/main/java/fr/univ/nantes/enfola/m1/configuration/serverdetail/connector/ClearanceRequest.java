@@ -16,8 +16,8 @@ public class ClearanceRequest extends Connector {
     private final RoleRequired<String> roleConnectionManagerRequired;
     private final RoleProvided<String> roleSecurityManagerProvided;
     private final RoleRequired<String> roleSecurityManagerRequired;
-    private Glue<String,String> connectionManagerToSecurityManager;
-    private Glue<String,String> securityManagerToConnectionManager;
+    private Glue<String, String> connectionManagerToSecurityManager;
+    private Glue<String, String> securityManagerToConnectionManager;
 
     public ClearanceRequest() {
         super();

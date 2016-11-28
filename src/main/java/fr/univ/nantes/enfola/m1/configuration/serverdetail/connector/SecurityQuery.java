@@ -16,8 +16,8 @@ public class SecurityQuery extends Connector {
     private final RoleRequired<String> roleDatabaseRequired;
     private final RoleProvided<String> roleSecurityManagerProvided;
     private final RoleRequired<String> roleSecurityManagerRequired;
-    private Glue<String,String> databaseToSecurityManager;
-    private Glue<String,String> securityManagerToDatabase;
+    private Glue<String, String> databaseToSecurityManager;
+    private Glue<String, String> securityManagerToDatabase;
 
     public SecurityQuery() {
         super();
@@ -49,7 +49,7 @@ public class SecurityQuery extends Connector {
         return roleSecurityManagerRequired;
     }
 
-    private class DatabaseToSecurityManager extends Glue<String,String> {
+    private class DatabaseToSecurityManager extends Glue<String, String> {
         protected DatabaseToSecurityManager() {
             super(SecurityQuery.this);
         }
@@ -62,7 +62,7 @@ public class SecurityQuery extends Connector {
         }
     }
 
-    private class SecurityManagerToDatabase extends Glue<String,String> {
+    private class SecurityManagerToDatabase extends Glue<String, String> {
         protected SecurityManagerToDatabase() {
             super(SecurityQuery.this);
         }

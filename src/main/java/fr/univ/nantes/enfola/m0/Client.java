@@ -16,7 +16,13 @@ public class Client implements Reader<String>, Writer<String> {
     public Client() {
         system = new System();
 
-        system.getPortClientProvided().addReader(this);
+        system.getPortRequired().addReader(this);
+    }
+
+    public static void main(String[] args) {
+        Client client = new Client();
+
+        client.write("Bonjour la France!");
     }
 
     @Override
@@ -26,12 +32,6 @@ public class Client implements Reader<String>, Writer<String> {
 
     @Override
     public void write(String s) {
-        system.getPortClientRequired().write(s);
-    }
-
-    public static void main(String[] args) {
-        Client client = new Client();
-
-        client.write("Bonjour la France!");
+        system.getPortProvided().write(s);
     }
 }

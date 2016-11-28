@@ -32,11 +32,11 @@ public class ConnectionManager extends Component {
     protected <T> void read(PortComponentRequired<T> portComponentRequired, T t) {
         LOGGER.info(t.toString());
 
-        if(portComponentRequired == portClearanceRequestRequired) {
+        if (portComponentRequired == portClearanceRequestRequired) {
             write(portServerDetailProvided, (String) t);
-        } else if(portComponentRequired == portServerDetailRequired) {
+        } else if (portComponentRequired == portServerDetailRequired) {
             write(portClearanceRequestProvided, (String) t);
-        } else if(portComponentRequired == portSqlRequestRequired) {
+        } else if (portComponentRequired == portSqlRequestRequired) {
             write(portServerDetailProvided, (String) t);
         }
     }

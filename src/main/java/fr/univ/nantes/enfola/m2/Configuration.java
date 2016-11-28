@@ -13,6 +13,7 @@ public abstract class Configuration implements ArchitecturalObject {
     private Map<PortConfigurationRequired, PortComponentRequired> bindings2;
     private Map<PortComponentProvided, RoleRequired> attachments1;
     private Map<RoleProvided, PortComponentRequired> attachments2;
+    private Map<PortConfigurationProvided, PortConfigurationRequired> bridges;
 
     /**
      *
@@ -24,6 +25,18 @@ public abstract class Configuration implements ArchitecturalObject {
         bindings2 = new HashMap<PortConfigurationRequired, PortComponentRequired>();
         attachments1 = new HashMap<PortComponentProvided, RoleRequired>();
         attachments2 = new HashMap<RoleProvided, PortComponentRequired>();
+        bridges = new HashMap<PortConfigurationProvided, PortConfigurationRequired>();
+    }
+
+    /**
+     * @param portConfigurationProvided
+     * @param portConfigurationRequired
+     * @param <T>
+     */
+    protected final <T> void bridge(PortConfigurationProvided<T> portConfigurationProvided, PortConfigurationRequired<T> portConfigurationRequired) {
+        //if(portConfigurationProvided != null && portConfigurationRequired != null && !localBindings.containsKey(portConfigurationProvided) && !localBindings.containsValue(portConfigurationRequired)) {
+        bridges.put(portConfigurationProvided, portConfigurationRequired);
+        //}
     }
 
     /**
@@ -32,11 +45,10 @@ public abstract class Configuration implements ArchitecturalObject {
      * @param <T>
      */
     protected final <T> void bind(PortComponentProvided<T> portComponentProvided, PortConfigurationProvided<T> portConfigurationProvided) {
-        if (portComponentProvided != null && portConfigurationProvided != null && !bindings1.containsKey(portComponentProvided) && !bindings1.containsValue(portConfigurationProvided)) {
-            bindings1.put(portComponentProvided, portConfigurationProvided);
-            portComponentProvided.setConfiguration(friend, this);
-            portConfigurationProvided.setConfiguration(friend, this);
-        }
+        //if (portComponentProvided != null && portConfigurationProvided != null && !bindings1.containsKey(portComponentProvided) && !bindings1.containsValue(portConfigurationProvided)) {
+        bindings1.put(portComponentProvided, portConfigurationProvided);
+        portComponentProvided.setConfiguration(friend, this);
+        //}
     }
 
     /**
@@ -45,11 +57,11 @@ public abstract class Configuration implements ArchitecturalObject {
      * @param <T>
      */
     protected final <T> void bind(PortConfigurationRequired<T> portConfigurationRequired, PortComponentRequired<T> portComponentRequired) {
-        if (portConfigurationRequired != null && portComponentRequired != null && !bindings2.containsKey(portConfigurationRequired) && !bindings2.containsValue(portComponentRequired)) {
-            bindings2.put(portConfigurationRequired, portComponentRequired);
-            portConfigurationRequired.setConfiguration(friend, this);
-            portComponentRequired.setConfiguration(friend, this);
-        }
+        //if (portConfigurationRequired != null && portComponentRequired != null && !bindings2.containsKey(portConfigurationRequired) && !bindings2.containsValue(portComponentRequired)) {
+        bindings2.put(portConfigurationRequired, portComponentRequired);
+        portConfigurationRequired.addConfiguration(friend, this);
+        portComponentRequired.setConfiguration(friend, this);
+        //}
     }
 
     /**
@@ -76,11 +88,11 @@ public abstract class Configuration implements ArchitecturalObject {
      * @param <T>
      */
     protected final <T> void attach(PortComponentProvided<T> portComponentProvided, RoleRequired<T> roleRequired) {
-        if (portComponentProvided != null && roleRequired != null && !attachments1.containsKey(portComponentProvided) && !attachments1.containsValue(roleRequired)) {
-            attachments1.put(portComponentProvided, roleRequired);
-            portComponentProvided.setConfiguration(friend, this);
-            roleRequired.setConfiguration(friend, this);
-        }
+        //if (portComponentProvided != null && roleRequired != null && !attachments1.containsKey(portComponentProvided) && !attachments1.containsValue(roleRequired)) {
+        attachments1.put(portComponentProvided, roleRequired);
+        portComponentProvided.setConfiguration(friend, this);
+        roleRequired.setConfiguration(friend, this);
+        //}
     }
 
     /**
@@ -89,11 +101,11 @@ public abstract class Configuration implements ArchitecturalObject {
      * @param <T>
      */
     protected final <T> void attach(RoleProvided<T> roleProvided, PortComponentRequired<T> portComponentRequired) {
-        if (roleProvided != null && portComponentRequired != null && !attachments2.containsKey(roleProvided) && !attachments2.containsValue(portComponentRequired)) {
-            attachments2.put(roleProvided, portComponentRequired);
-            roleProvided.setConfiguration(friend, this);
-            portComponentRequired.setConfiguration(friend, this);
-        }
+        //if (roleProvided != null && portComponentRequired != null && !attachments2.containsKey(roleProvided) && !attachments2.containsValue(portComponentRequired)) {
+        attachments2.put(roleProvided, portComponentRequired);
+        roleProvided.setConfiguration(friend, this);
+        portComponentRequired.setConfiguration(friend, this);
+        //}
     }
 
     /**
@@ -165,6 +177,16 @@ public abstract class Configuration implements ArchitecturalObject {
         PortComponentRequired<T> portComponentRequired = attachments2.get(roleProvided);
         if (portComponentRequired != null) {
             portComponentRequired.read(Configuration.friend, this, t);
+        }
+    }
+
+    public final <T> void read(PortConfigurationProvided.Friend friend, PortConfigurationProvided<T> portConfigurationProvided, T t) {
+        friend.hashCode();
+
+        /*localBindings.get(portConfigurationProvided).read(Configuration.friend, this, t);*/
+        PortConfigurationRequired<T> portConfigurationRequired = bridges.get(portConfigurationProvided);
+        if (portConfigurationRequired != null) {
+            portConfigurationRequired.read(Configuration.friend, t);
         }
     }
 

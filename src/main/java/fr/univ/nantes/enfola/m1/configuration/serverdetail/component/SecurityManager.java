@@ -28,9 +28,9 @@ public class SecurityManager extends Component {
     protected <T> void read(PortComponentRequired<T> portComponentRequired, T t) {
         LOGGER.info(t.toString());
 
-        if(portComponentRequired == portClearanceRequestRequired) {
+        if (portComponentRequired == portClearanceRequestRequired) {
             write(portSecurityQueryProvided, (String) t);
-        } else if(portComponentRequired == portSecurityQueryRequired) {
+        } else if (portComponentRequired == portSecurityQueryRequired) {
             write(portClearanceRequestProvided, (String) t);
         }
     }

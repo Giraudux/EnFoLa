@@ -16,8 +16,8 @@ public class SqlRequest extends Connector {
     private final RoleRequired<String> roleConnectionManagerRequired;
     private final RoleProvided<String> roleDatabaseProvided;
     private final RoleRequired<String> roleDatabaseRequired;
-    private Glue<String,String> connectionManagerToDatabase;
-    private Glue<String,String> databaseToConnectionManager;
+    private Glue<String, String> connectionManagerToDatabase;
+    private Glue<String, String> databaseToConnectionManager;
 
     public SqlRequest() {
         super();
@@ -49,7 +49,7 @@ public class SqlRequest extends Connector {
         return roleDatabaseRequired;
     }
 
-    private class ConnectionManagerToDatabase extends Glue<String,String> {
+    private class ConnectionManagerToDatabase extends Glue<String, String> {
         public ConnectionManagerToDatabase() {
             super(SqlRequest.this);
         }
@@ -62,7 +62,7 @@ public class SqlRequest extends Connector {
         }
     }
 
-    private class DatabaseToConnectionManager extends Glue<String,String> {
+    private class DatabaseToConnectionManager extends Glue<String, String> {
         public DatabaseToConnectionManager() {
             super(SqlRequest.this);
         }

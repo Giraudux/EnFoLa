@@ -4,14 +4,18 @@ import fr.univ.nantes.enfola.m1.configuration.serverdetail.component.ConnectionM
 import fr.univ.nantes.enfola.m1.configuration.serverdetail.component.Database;
 import fr.univ.nantes.enfola.m1.configuration.serverdetail.component.SecurityManager;
 import fr.univ.nantes.enfola.m1.configuration.serverdetail.connector.ClearanceRequest;
-import fr.univ.nantes.enfola.m1.configuration.serverdetail.connector.SqlRequest;
 import fr.univ.nantes.enfola.m1.configuration.serverdetail.connector.SecurityQuery;
-import fr.univ.nantes.enfola.m2.*;
+import fr.univ.nantes.enfola.m1.configuration.serverdetail.connector.SqlRequest;
+import fr.univ.nantes.enfola.m2.Configuration;
+import fr.univ.nantes.enfola.m2.PortConfigurationProvided;
+import fr.univ.nantes.enfola.m2.PortConfigurationRequired;
 
 /**
  * @author Alexis Giraudet
  */
 public class ServerDetail extends Configuration {
+    private final PortConfigurationProvided<String> portProvided;
+    private final PortConfigurationRequired<String> portRequired;
     private final PortConfigurationProvided<String> portConnectionManagerProvided;
     private final PortConfigurationRequired<String> portConnectionManagerRequired;
     private ConnectionManager connectionManager;
@@ -24,8 +28,10 @@ public class ServerDetail extends Configuration {
     public ServerDetail() {
         super();
 
-        portConnectionManagerProvided = new PortConfigurationProvided<String>();
-        portConnectionManagerRequired = new PortConfigurationRequired<String>();
+        portProvided = new PortConfigurationProvided<String>(this);
+        portRequired = new PortConfigurationRequired<String>(this);
+        portConnectionManagerProvided = new PortConfigurationProvided<String>(this);
+        portConnectionManagerRequired = new PortConfigurationRequired<String>(this);
 
         connectionManager = new ConnectionManager();
         database = new Database();
@@ -33,6 +39,9 @@ public class ServerDetail extends Configuration {
         clearanceRequest = new ClearanceRequest();
         securityQuery = new SecurityQuery();
         sqlRequest = new SqlRequest();
+
+        bridge(portProvided, portConnectionManagerRequired);
+        bridge(portConnectionManagerProvided, portRequired);
 
         // ServerDetail <=> ConnectionManager
         bind(connectionManager.getPortServerDetailProvided(), portConnectionManagerProvided);
@@ -60,15 +69,15 @@ public class ServerDetail extends Configuration {
 
         // ClearanceRequest <=> ConnectionManager
         attach(clearanceRequest.getRoleConnectionManagerProvided(), connectionManager.getPortClearanceRequestRequired());
-        attach(connectionManager.getPortClearanceRequestProvided(), clearanceRequest.getRoleSecurityManagerRequired());
+        attach(connectionManager.getPortClearanceRequestProvided(), clearanceRequest.getRoleConnectionManagerRequired());
 
     }
 
-    public PortConfigurationProvided<String> getPortConnectionManagerProvided() {
-        return portConnectionManagerProvided;
+    public PortConfigurationProvided<String> getPortProvided() {
+        return portProvided;
     }
 
-    public PortConfigurationRequired<String> getPortConnectionManagerRequired() {
-        return portConnectionManagerRequired;
+    public PortConfigurationRequired<String> getPortRequired() {
+        return portRequired;
     }
 }

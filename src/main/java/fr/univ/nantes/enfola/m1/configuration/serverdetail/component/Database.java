@@ -28,9 +28,9 @@ public class Database extends Component {
     protected <T> void read(PortComponentRequired<T> portComponentRequired, T t) {
         LOGGER.info(t.toString());
 
-        if(portComponentRequired == portSecurityQueryRequired) {
+        if (portComponentRequired == portSecurityQueryRequired) {
             write(portSqlRequestProvided, (String) t);
-        } else if(portComponentRequired == portSqlRequestRequired) {
+        } else if (portComponentRequired == portSqlRequestRequired) {
             write(portSecurityQueryProvided, (String) t);
         }
     }
