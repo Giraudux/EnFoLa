@@ -2,9 +2,9 @@ package fr.univ.nantes.enfola.m1.configuration.serverdetail.component;
 
 import fr.univ.nantes.enfola.m1.bean.Query;
 import fr.univ.nantes.enfola.m1.bean.Reply;
-import fr.univ.nantes.enfola.m2.Component;
-import fr.univ.nantes.enfola.m2.PortComponentProvided;
-import fr.univ.nantes.enfola.m2.PortComponentRequired;
+import fr.univ.nantes.enfola.m2.core.Component;
+import fr.univ.nantes.enfola.m2.interfaces.ports.component.PortComponentProvided;
+import fr.univ.nantes.enfola.m2.interfaces.ports.component.PortComponentRequired;
 
 import java.util.Collection;
 import java.util.HashMap;
@@ -14,6 +14,7 @@ import java.util.logging.Logger;
 
 /**
  * @author Alexis Giraudet
+ * @author Pierre Gaultier
  */
 public class Database extends Component {
     private final static Logger LOGGER = Logger.getLogger(Database.class.getName());
@@ -21,9 +22,12 @@ public class Database extends Component {
     private final PortComponentRequired<Query> portSqlRequestRequired;
     private final PortComponentProvided<Reply> portSecurityQueryProvided;
     private final PortComponentRequired<Query> portSecurityQueryRequired;
-    private Map<String,String> data;
+    private Map<String, String> data;
     private Collection<String> authorizedUsers;
 
+    /**
+     *
+     */
     public Database() {
         super();
 
@@ -42,13 +46,18 @@ public class Database extends Component {
         authorizedUsers.add("alexis");
     }
 
+    /**
+     * @param portComponentRequired
+     * @param t
+     * @param <T>
+     */
     protected <T> void read(PortComponentRequired<T> portComponentRequired, T t) {
         LOGGER.info(t.toString());
         Query query = (Query) t;
         Reply reply = new Reply();
 
         if (portComponentRequired == portSecurityQueryRequired) {
-            if(data.containsKey(query.getKey())) {
+            if (data.containsKey(query.getKey())) {
                 reply.setStatus(0);
                 reply.setMessage("database query SUCCESS");
                 reply.setValue(data.get(query.getKey()));
@@ -59,7 +68,7 @@ public class Database extends Component {
 
             write(portSqlRequestProvided, reply);
         } else if (portComponentRequired == portSqlRequestRequired) {
-            if(authorizedUsers.contains(query.getUsername())) {
+            if (authorizedUsers.contains(query.getUsername())) {
                 reply.setMessage("database authorization SUCCESS");
                 reply.setStatus(0);
             } else {
@@ -70,18 +79,30 @@ public class Database extends Component {
         }
     }
 
+    /**
+     * @return
+     */
     public PortComponentProvided<Reply> getPortSqlRequestProvided() {
         return portSqlRequestProvided;
     }
 
+    /**
+     * @return
+     */
     public PortComponentRequired<Query> getPortSqlRequestRequired() {
         return portSqlRequestRequired;
     }
 
+    /**
+     * @return
+     */
     public PortComponentProvided<Reply> getPortSecurityQueryProvided() {
         return portSecurityQueryProvided;
     }
 
+    /**
+     * @return
+     */
     public PortComponentRequired<Query> getPortSecurityQueryRequired() {
         return portSecurityQueryRequired;
     }

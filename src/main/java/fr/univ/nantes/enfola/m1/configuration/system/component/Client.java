@@ -1,13 +1,14 @@
 package fr.univ.nantes.enfola.m1.configuration.system.component;
 
-import fr.univ.nantes.enfola.m2.Component;
-import fr.univ.nantes.enfola.m2.PortComponentProvided;
-import fr.univ.nantes.enfola.m2.PortComponentRequired;
+import fr.univ.nantes.enfola.m2.core.Component;
+import fr.univ.nantes.enfola.m2.interfaces.ports.component.PortComponentProvided;
+import fr.univ.nantes.enfola.m2.interfaces.ports.component.PortComponentRequired;
 
 import java.util.logging.Logger;
 
 /**
  * @author Alexis Giraudet
+ * @author Pierre Gaultier
  */
 public class Client extends Component {
     private final static Logger LOGGER = Logger.getLogger(Client.class.getName());
@@ -16,6 +17,9 @@ public class Client extends Component {
     private final PortComponentProvided<String> portSystemProvided;
     private final PortComponentRequired<String[]> portSystemRequired;
 
+    /**
+     *
+     */
     public Client() {
         super();
 
@@ -25,6 +29,11 @@ public class Client extends Component {
         portSystemRequired = new PortComponentRequired<String[]>(this);
     }
 
+    /**
+     * @param portComponentRequired
+     * @param t
+     * @param <T>
+     */
     protected <T> void read(PortComponentRequired<T> portComponentRequired, T t) {
         LOGGER.info(t.toString());
 
@@ -35,18 +44,30 @@ public class Client extends Component {
         }
     }
 
+    /**
+     * @return
+     */
     public PortComponentProvided<String[]> getPortRpcProvided() {
         return portRpcProvided;
     }
 
+    /**
+     * @return
+     */
     public PortComponentRequired<String> getPortRpcRequired() {
         return portRpcRequired;
     }
 
+    /**
+     * @return
+     */
     public PortComponentProvided<String> getPortSystemProvided() {
         return portSystemProvided;
     }
 
+    /**
+     * @return
+     */
     public PortComponentRequired<String[]> getPortSystemRequired() {
         return portSystemRequired;
     }

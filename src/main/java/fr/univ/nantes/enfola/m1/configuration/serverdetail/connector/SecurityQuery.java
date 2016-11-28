@@ -2,15 +2,16 @@ package fr.univ.nantes.enfola.m1.configuration.serverdetail.connector;
 
 import fr.univ.nantes.enfola.m1.bean.Query;
 import fr.univ.nantes.enfola.m1.bean.Reply;
-import fr.univ.nantes.enfola.m2.Connector;
-import fr.univ.nantes.enfola.m2.Glue;
-import fr.univ.nantes.enfola.m2.RoleProvided;
-import fr.univ.nantes.enfola.m2.RoleRequired;
+import fr.univ.nantes.enfola.m2.core.Connector;
+import fr.univ.nantes.enfola.m2.core.Glue;
+import fr.univ.nantes.enfola.m2.interfaces.roles.RoleProvided;
+import fr.univ.nantes.enfola.m2.interfaces.roles.RoleRequired;
 
 import java.util.logging.Logger;
 
 /**
  * @author Alexis Giraudet
+ * @author Pierre Gaultier
  */
 public class SecurityQuery extends Connector {
     private final static Logger LOGGER = Logger.getLogger(SecurityQuery.class.getName());
@@ -21,6 +22,9 @@ public class SecurityQuery extends Connector {
     private Glue<Reply, Reply> databaseToSecurityManager;
     private Glue<Query, Query> securityManagerToDatabase;
 
+    /**
+     *
+     */
     public SecurityQuery() {
         super();
 
@@ -35,22 +39,37 @@ public class SecurityQuery extends Connector {
         connect(roleSecurityManagerRequired, securityManagerToDatabase, roleDatabaseProvided);
     }
 
+    /**
+     * @return
+     */
     public RoleProvided<Query> getRoleDatabaseProvided() {
         return roleDatabaseProvided;
     }
 
+    /**
+     * @return
+     */
     public RoleRequired<Reply> getRoleDatabaseRequired() {
         return roleDatabaseRequired;
     }
 
+    /**
+     * @return
+     */
     public RoleProvided<Reply> getRoleSecurityManagerProvided() {
         return roleSecurityManagerProvided;
     }
 
+    /**
+     * @return
+     */
     public RoleRequired<Query> getRoleSecurityManagerRequired() {
         return roleSecurityManagerRequired;
     }
 
+    /**
+     *
+     */
     private class DatabaseToSecurityManager extends Glue<Reply, Reply> {
         protected DatabaseToSecurityManager() {
             super(SecurityQuery.this);
@@ -64,6 +83,9 @@ public class SecurityQuery extends Connector {
         }
     }
 
+    /**
+     *
+     */
     private class SecurityManagerToDatabase extends Glue<Query, Query> {
         protected SecurityManagerToDatabase() {
             super(SecurityQuery.this);

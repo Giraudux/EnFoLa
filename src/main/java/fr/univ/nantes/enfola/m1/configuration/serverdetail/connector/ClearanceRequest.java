@@ -2,15 +2,16 @@ package fr.univ.nantes.enfola.m1.configuration.serverdetail.connector;
 
 import fr.univ.nantes.enfola.m1.bean.Query;
 import fr.univ.nantes.enfola.m1.bean.Reply;
-import fr.univ.nantes.enfola.m2.Connector;
-import fr.univ.nantes.enfola.m2.Glue;
-import fr.univ.nantes.enfola.m2.RoleProvided;
-import fr.univ.nantes.enfola.m2.RoleRequired;
+import fr.univ.nantes.enfola.m2.core.Connector;
+import fr.univ.nantes.enfola.m2.core.Glue;
+import fr.univ.nantes.enfola.m2.interfaces.roles.RoleProvided;
+import fr.univ.nantes.enfola.m2.interfaces.roles.RoleRequired;
 
 import java.util.logging.Logger;
 
 /**
  * @author Alexis Giraudet
+ * @author Pierre Gaultier
  */
 public class ClearanceRequest extends Connector {
     private final static Logger LOGGER = Logger.getLogger(ClearanceRequest.class.getName());
@@ -21,6 +22,9 @@ public class ClearanceRequest extends Connector {
     private Glue<Query, Query> connectionManagerToSecurityManager;
     private Glue<Reply, Reply> securityManagerToConnectionManager;
 
+    /**
+     *
+     */
     public ClearanceRequest() {
         super();
 
@@ -35,27 +39,46 @@ public class ClearanceRequest extends Connector {
         connect(roleSecurityManagerRequired, securityManagerToConnectionManager, roleConnectionManagerProvided);
     }
 
+    /**
+     * @return
+     */
     public RoleProvided<Reply> getRoleConnectionManagerProvided() {
         return roleConnectionManagerProvided;
     }
 
+    /**
+     * @return
+     */
     public RoleRequired<Query> getRoleConnectionManagerRequired() {
         return roleConnectionManagerRequired;
     }
 
+    /**
+     * @return
+     */
     public RoleProvided<Query> getRoleSecurityManagerProvided() {
         return roleSecurityManagerProvided;
     }
 
+    /**
+     * @return
+     */
     public RoleRequired<Reply> getRoleSecurityManagerRequired() {
         return roleSecurityManagerRequired;
     }
 
+    /**
+     *
+     */
     private class ConnectionManagerToSecurityManager extends Glue<Query, Query> {
         protected ConnectionManagerToSecurityManager() {
             super(ClearanceRequest.this);
         }
 
+        /**
+         * @param s
+         * @return
+         */
         @Override
         protected Query transform(Query s) {
             LOGGER.info(s.toString());
@@ -64,11 +87,18 @@ public class ClearanceRequest extends Connector {
         }
     }
 
+    /**
+     *
+     */
     private class SecurityManagerToConnectionManager extends Glue<Reply, Reply> {
         protected SecurityManagerToConnectionManager() {
             super(ClearanceRequest.this);
         }
 
+        /**
+         * @param s
+         * @return
+         */
         @Override
         protected Reply transform(Reply s) {
             LOGGER.info(s.toString());

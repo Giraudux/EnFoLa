@@ -1,13 +1,13 @@
-package fr.univ.nantes.enfola.m2;
+package fr.univ.nantes.enfola.m2.util;
 
 /**
  * @author Alexis Giraudet
  * @author Pierre Gaultier
  */
-public interface Reader<T> {
+public interface Writer<T> {
 
     /**
      * @param t
      */
-    void read(T t);
+    void write(T t);
 }

@@ -1,4 +1,6 @@
-package fr.univ.nantes.enfola.m2;
+package fr.univ.nantes.enfola.m2.core;
+
+import fr.univ.nantes.enfola.m2.interfaces.roles.RoleProvided;
 
 /**
  * @author Alexis Giraudet

@@ -2,6 +2,7 @@ package fr.univ.nantes.enfola.m1.bean;
 
 /**
  * @author Alexis Giraudet
+ * @author Pierre Gaultier
  */
 public class Reply {
     private int status;
@@ -11,6 +12,7 @@ public class Reply {
     public Reply() {
 
     }
+
     public Reply(int status, String message, String value) {
         this.status = status;
         this.message = message;
@@ -43,6 +45,6 @@ public class Reply {
 
     @Override
     public String toString() {
-        return "status="+status+" message="+(message == null? message: "\""+message+"\"")+" value="+(value == null? value: "\""+value+"\"");
+        return "status=" + status + " message=" + (message == null ? message : "\"" + message + "\"") + " value=" + (value == null ? value : "\"" + value + "\"");
     }
 }

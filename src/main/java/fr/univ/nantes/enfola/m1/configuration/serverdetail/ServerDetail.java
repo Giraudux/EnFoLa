@@ -8,12 +8,13 @@ import fr.univ.nantes.enfola.m1.configuration.serverdetail.component.SecurityMan
 import fr.univ.nantes.enfola.m1.configuration.serverdetail.connector.ClearanceRequest;
 import fr.univ.nantes.enfola.m1.configuration.serverdetail.connector.SecurityQuery;
 import fr.univ.nantes.enfola.m1.configuration.serverdetail.connector.SqlRequest;
-import fr.univ.nantes.enfola.m2.Configuration;
-import fr.univ.nantes.enfola.m2.PortConfigurationProvided;
-import fr.univ.nantes.enfola.m2.PortConfigurationRequired;
+import fr.univ.nantes.enfola.m2.core.Configuration;
+import fr.univ.nantes.enfola.m2.interfaces.ports.configuration.PortConfigurationProvided;
+import fr.univ.nantes.enfola.m2.interfaces.ports.configuration.PortConfigurationRequired;
 
 /**
  * @author Alexis Giraudet
+ * @author Pierre Gaultier
  */
 public class ServerDetail extends Configuration {
     private final PortConfigurationProvided<Query> portProvided;
@@ -27,6 +28,9 @@ public class ServerDetail extends Configuration {
     private SecurityQuery securityQuery;
     private SqlRequest sqlRequest;
 
+    /**
+     *
+     */
     public ServerDetail() {
         super();
 
@@ -75,10 +79,16 @@ public class ServerDetail extends Configuration {
 
     }
 
+    /**
+     * @return
+     */
     public PortConfigurationProvided<Query> getPortProvided() {
         return portProvided;
     }
 
+    /**
+     * @return
+     */
     public PortConfigurationRequired<Reply> getPortRequired() {
         return portRequired;
     }

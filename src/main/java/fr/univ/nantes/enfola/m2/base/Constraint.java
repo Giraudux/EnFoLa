@@ -1,4 +1,4 @@
-package fr.univ.nantes.enfola.m2;
+package fr.univ.nantes.enfola.m2.base;
 
 /**
  * @author Alexis Giraudet

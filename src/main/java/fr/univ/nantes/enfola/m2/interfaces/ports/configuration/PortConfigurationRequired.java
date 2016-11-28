@@ -1,4 +1,7 @@
-package fr.univ.nantes.enfola.m2;
+package fr.univ.nantes.enfola.m2.interfaces.ports.configuration;
+
+import fr.univ.nantes.enfola.m2.core.Configuration;
+import fr.univ.nantes.enfola.m2.util.Reader;
 
 import java.util.Collection;
 import java.util.HashSet;

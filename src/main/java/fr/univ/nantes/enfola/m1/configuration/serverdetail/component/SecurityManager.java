@@ -2,9 +2,9 @@ package fr.univ.nantes.enfola.m1.configuration.serverdetail.component;
 
 import fr.univ.nantes.enfola.m1.bean.Query;
 import fr.univ.nantes.enfola.m1.bean.Reply;
-import fr.univ.nantes.enfola.m2.Component;
-import fr.univ.nantes.enfola.m2.PortComponentProvided;
-import fr.univ.nantes.enfola.m2.PortComponentRequired;
+import fr.univ.nantes.enfola.m2.core.Component;
+import fr.univ.nantes.enfola.m2.interfaces.ports.component.PortComponentProvided;
+import fr.univ.nantes.enfola.m2.interfaces.ports.component.PortComponentRequired;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -12,6 +12,7 @@ import java.util.logging.Logger;
 
 /**
  * @author Alexis Giraudet
+ * @author Pierre Gaultier
  */
 public class SecurityManager extends Component {
     private final static Logger LOGGER = Logger.getLogger(SecurityManager.class.getName());
@@ -19,8 +20,11 @@ public class SecurityManager extends Component {
     private final PortComponentRequired<Reply> portSecurityQueryRequired;
     private final PortComponentProvided<Reply> portClearanceRequestProvided;
     private final PortComponentRequired<Query> portClearanceRequestRequired;
-    private Map<String,String> users;
+    private Map<String, String> users;
 
+    /**
+     *
+     */
     public SecurityManager() {
         super();
 
@@ -36,14 +40,19 @@ public class SecurityManager extends Component {
         users.put("alexis", "giraudet");
     }
 
+    /**
+     * @param portComponentRequired
+     * @param t
+     * @param <T>
+     */
     protected <T> void read(PortComponentRequired<T> portComponentRequired, T t) {
         LOGGER.info(t.toString());
         Query query = (Query) t;
         Reply reply = new Reply();
 
         if (portComponentRequired == portClearanceRequestRequired) {
-            if(users.containsKey(query.getUsername())) {
-                if(users.get(query.getUsername()).equals(query.getPassword())) {
+            if (users.containsKey(query.getUsername())) {
+                if (users.get(query.getUsername()).equals(query.getPassword())) {
                     write(portSecurityQueryProvided, (Query) t);
                 } else {
                     reply.setStatus(45);
@@ -60,18 +69,30 @@ public class SecurityManager extends Component {
         }
     }
 
+    /**
+     * @return
+     */
     public PortComponentProvided<Query> getPortSecurityQueryProvided() {
         return portSecurityQueryProvided;
     }
 
+    /**
+     * @return
+     */
     public PortComponentRequired<Reply> getPortSecurityQueryRequired() {
         return portSecurityQueryRequired;
     }
 
+    /**
+     * @return
+     */
     public PortComponentProvided<Reply> getPortClearanceRequestProvided() {
         return portClearanceRequestProvided;
     }
 
+    /**
+     * @return
+     */
     public PortComponentRequired<Query> getPortClearanceRequestRequired() {
         return portClearanceRequestRequired;
     }

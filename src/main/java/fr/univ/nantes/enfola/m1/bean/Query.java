@@ -2,6 +2,7 @@ package fr.univ.nantes.enfola.m1.bean;
 
 /**
  * @author Alexis Giraudet
+ * @author Pierre Gaultier
  */
 public class Query {
     private String username;
@@ -44,6 +45,6 @@ public class Query {
 
     @Override
     public String toString() {
-        return "username="+username+" password="+password+" key="+key;
+        return "username=" + username + " password=" + password + " key=" + key;
     }
 }

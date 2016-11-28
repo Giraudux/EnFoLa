@@ -1,2 +1,6 @@
 # EnFoLa
-Entraide Fourmi Lama
+
+Homemade Architecture Description Language
+
+Pierre Gaultier
+Alexis Giraudet

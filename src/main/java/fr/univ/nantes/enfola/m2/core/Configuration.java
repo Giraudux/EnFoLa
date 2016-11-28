@@ -1,4 +1,12 @@
-package fr.univ.nantes.enfola.m2;
+package fr.univ.nantes.enfola.m2.core;
+
+import fr.univ.nantes.enfola.m2.base.ArchitecturalObject;
+import fr.univ.nantes.enfola.m2.interfaces.ports.component.PortComponentProvided;
+import fr.univ.nantes.enfola.m2.interfaces.ports.component.PortComponentRequired;
+import fr.univ.nantes.enfola.m2.interfaces.ports.configuration.PortConfigurationProvided;
+import fr.univ.nantes.enfola.m2.interfaces.ports.configuration.PortConfigurationRequired;
+import fr.univ.nantes.enfola.m2.interfaces.roles.RoleProvided;
+import fr.univ.nantes.enfola.m2.interfaces.roles.RoleRequired;
 
 import java.util.HashMap;
 import java.util.Map;

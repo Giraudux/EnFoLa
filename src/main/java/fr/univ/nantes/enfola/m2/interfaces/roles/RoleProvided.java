@@ -1,24 +1,29 @@
-package fr.univ.nantes.enfola.m2;
+package fr.univ.nantes.enfola.m2.interfaces.roles;
+
+import fr.univ.nantes.enfola.m2.core.Configuration;
+import fr.univ.nantes.enfola.m2.core.Connector;
+import fr.univ.nantes.enfola.m2.core.Glue;
 
 /**
  * @author Alexis Giraudet
  * @author Pierre Gaultier
  */
-public class RoleRequired<T> implements Role<T> {
+public class RoleProvided<T> implements Role<T> {
     private static final Friend friend = new Friend();
     private final Connector connector;
     private Configuration configuration;
+    private Glue glue;
 
     /**
      * @param connector
      */
-    public RoleRequired(Connector connector) {
+    public RoleProvided(Connector connector) {
         super();
 
         this.connector = connector;
         this.configuration = null;
 
-        connector.addRoleRequired(friend, this);
+        connector.addRoleProvided(friend, this);
     }
 
     /**
@@ -33,15 +38,27 @@ public class RoleRequired<T> implements Role<T> {
 
     /**
      * @param friend
-     * @param configuration
-     * @param t
+     * @param glue
      */
-    public void read(Configuration.Friend friend, Configuration configuration, T t) {
+    public final void setGlue(Glue.Friend friend, Glue glue) {
         friend.hashCode();
 
-        if (this.configuration == configuration) {
-            connector.read(RoleRequired.friend, this, t);
+        this.glue = glue;
+    }
+
+    /**
+     * @param friend
+     * @param glue
+     * @param t
+     */
+    public final boolean read(Glue.Friend friend, Glue glue, T t) {
+        friend.hashCode();
+
+        if (this.glue == glue && configuration != null) {
+            return configuration.read(RoleProvided.friend, this, t);
         }
+
+        return false;
     }
 
     /**

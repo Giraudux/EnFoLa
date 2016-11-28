@@ -4,12 +4,13 @@ import fr.univ.nantes.enfola.m1.configuration.serverdetail.ServerDetail;
 import fr.univ.nantes.enfola.m1.configuration.system.component.Client;
 import fr.univ.nantes.enfola.m1.configuration.system.component.Server;
 import fr.univ.nantes.enfola.m1.configuration.system.connector.Rpc;
-import fr.univ.nantes.enfola.m2.Configuration;
-import fr.univ.nantes.enfola.m2.PortConfigurationProvided;
-import fr.univ.nantes.enfola.m2.PortConfigurationRequired;
+import fr.univ.nantes.enfola.m2.core.Configuration;
+import fr.univ.nantes.enfola.m2.interfaces.ports.configuration.PortConfigurationProvided;
+import fr.univ.nantes.enfola.m2.interfaces.ports.configuration.PortConfigurationRequired;
 
 /**
  * @author Alexis Giraudet
+ * @author Pierre Gaultier
  */
 public class System extends Configuration {
     private final PortConfigurationProvided<String[]> portProvided;
@@ -21,6 +22,9 @@ public class System extends Configuration {
     private Server server;
     private ServerDetail serverDetail;
 
+    /**
+     *
+     */
     public System() {
         super();
 
@@ -53,10 +57,16 @@ public class System extends Configuration {
         bind(serverDetail.getPortRequired(), server.getPortServerDetailRequired());
     }
 
+    /**
+     * @return
+     */
     public PortConfigurationProvided<String[]> getPortProvided() {
         return portProvided;
     }
 
+    /**
+     * @return
+     */
     public PortConfigurationRequired<String> getPortRequired() {
         return portRequired;
     }

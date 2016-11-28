@@ -1,10 +1,11 @@
 package fr.univ.nantes.enfola.m0;
 
-import fr.univ.nantes.enfola.m2.Reader;
-import fr.univ.nantes.enfola.m2.Writer;
+import fr.univ.nantes.enfola.m2.util.Reader;
+import fr.univ.nantes.enfola.m2.util.Writer;
 
 /**
  * @author Alexis Giraudet
+ * @author Pierre Gaultier
  */
 public class Client implements Reader<String>, Writer<String[]> {
     private fr.univ.nantes.enfola.m1.configuration.system.System system;
@@ -18,7 +19,7 @@ public class Client implements Reader<String>, Writer<String[]> {
     public static void main(String[] args) throws Exception {
         Client client = new Client();
 
-        args = new String[] {"alexis", "giraudet", "P"};
+        args = new String[]{"alexis", "giraudet", "P"};
         client.write(args);
     }
 

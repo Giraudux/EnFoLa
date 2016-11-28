@@ -1,4 +1,8 @@
-package fr.univ.nantes.enfola.m2;
+package fr.univ.nantes.enfola.m2.core;
+
+import fr.univ.nantes.enfola.m2.base.ArchitecturalObject;
+import fr.univ.nantes.enfola.m2.interfaces.ports.component.PortComponentProvided;
+import fr.univ.nantes.enfola.m2.interfaces.ports.component.PortComponentRequired;
 
 import java.util.Collection;
 import java.util.HashSet;

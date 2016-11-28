@@ -1,4 +1,6 @@
-package fr.univ.nantes.enfola.m2;
+package fr.univ.nantes.enfola.m2.interfaces.ports.component;
+
+import fr.univ.nantes.enfola.m2.interfaces.ports.Port;
 
 /**
  * @author Alexis Giraudet
