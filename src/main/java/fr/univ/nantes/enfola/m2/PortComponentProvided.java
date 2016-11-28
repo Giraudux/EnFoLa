@@ -36,12 +36,14 @@ public class PortComponentProvided<T> implements PortComponent<T> {
      * @param component
      * @param t
      */
-    public final void read(Component.Friend friend, Component component, T t) {
+    public final boolean read(Component.Friend friend, Component component, T t) {
         friend.hashCode();
 
         if (this.component == component) {
-            configuration.read(PortComponentProvided.friend, this, t);
+            return configuration.read(PortComponentProvided.friend, this, t);
         }
+
+        return false;
     }
 
     /**

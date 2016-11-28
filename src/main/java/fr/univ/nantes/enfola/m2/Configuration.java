@@ -33,10 +33,14 @@ public abstract class Configuration implements ArchitecturalObject {
      * @param portConfigurationRequired
      * @param <T>
      */
-    protected final <T> void bridge(PortConfigurationProvided<T> portConfigurationProvided, PortConfigurationRequired<T> portConfigurationRequired) {
-        //if(portConfigurationProvided != null && portConfigurationRequired != null && !localBindings.containsKey(portConfigurationProvided) && !localBindings.containsValue(portConfigurationRequired)) {
-        bridges.put(portConfigurationProvided, portConfigurationRequired);
-        //}
+    protected final <T> boolean bridge(PortConfigurationProvided<T> portConfigurationProvided, PortConfigurationRequired<T> portConfigurationRequired) {
+        if (portConfigurationProvided != null && portConfigurationRequired != null && !bridges.containsKey(portConfigurationProvided)) {
+            bridges.put(portConfigurationProvided, portConfigurationRequired);
+
+            return true;
+        }
+
+        return false;
     }
 
     /**
@@ -44,11 +48,15 @@ public abstract class Configuration implements ArchitecturalObject {
      * @param portConfigurationProvided
      * @param <T>
      */
-    protected final <T> void bind(PortComponentProvided<T> portComponentProvided, PortConfigurationProvided<T> portConfigurationProvided) {
-        //if (portComponentProvided != null && portConfigurationProvided != null && !bindings1.containsKey(portComponentProvided) && !bindings1.containsValue(portConfigurationProvided)) {
-        bindings1.put(portComponentProvided, portConfigurationProvided);
-        portComponentProvided.setConfiguration(friend, this);
-        //}
+    protected final <T> boolean bind(PortComponentProvided<T> portComponentProvided, PortConfigurationProvided<T> portConfigurationProvided) {
+        if (portComponentProvided != null && portConfigurationProvided != null && !bindings1.containsKey(portComponentProvided)) {
+            bindings1.put(portComponentProvided, portConfigurationProvided);
+            portComponentProvided.setConfiguration(friend, this);
+
+            return true;
+        }
+
+        return false;
     }
 
     /**
@@ -56,12 +64,16 @@ public abstract class Configuration implements ArchitecturalObject {
      * @param portComponentRequired
      * @param <T>
      */
-    protected final <T> void bind(PortConfigurationRequired<T> portConfigurationRequired, PortComponentRequired<T> portComponentRequired) {
-        //if (portConfigurationRequired != null && portComponentRequired != null && !bindings2.containsKey(portConfigurationRequired) && !bindings2.containsValue(portComponentRequired)) {
-        bindings2.put(portConfigurationRequired, portComponentRequired);
-        portConfigurationRequired.addConfiguration(friend, this);
-        portComponentRequired.setConfiguration(friend, this);
-        //}
+    protected final <T> boolean bind(PortConfigurationRequired<T> portConfigurationRequired, PortComponentRequired<T> portComponentRequired) {
+        if (portConfigurationRequired != null && portComponentRequired != null && !bindings2.containsKey(portConfigurationRequired)) {
+            bindings2.put(portConfigurationRequired, portComponentRequired);
+            portConfigurationRequired.addConfiguration(friend, this);
+            portComponentRequired.setConfiguration(friend, this);
+
+            return true;
+        }
+
+        return false;
     }
 
     /**
@@ -69,8 +81,16 @@ public abstract class Configuration implements ArchitecturalObject {
      * @param portComponentRequired
      * @param <T>
      */
-    protected final <T> void unbind(PortConfigurationRequired<T> portConfigurationRequired, PortComponentRequired<T> portComponentRequired) {
-        //TODO
+    protected final <T> boolean unbind(PortConfigurationRequired<T> portConfigurationRequired, PortComponentRequired<T> portComponentRequired) {
+        if (bindings2.get(portConfigurationRequired) == portComponentRequired) {
+            bindings2.remove(portConfigurationRequired);
+            portConfigurationRequired.removeConfiguration(friend, this);
+            portComponentRequired.setConfiguration(friend, null);
+
+            return true;
+        }
+
+        return false;
     }
 
     /**
@@ -78,8 +98,15 @@ public abstract class Configuration implements ArchitecturalObject {
      * @param portConfigurationProvided
      * @param <T>
      */
-    protected final <T> void unbind(PortComponentProvided<T> portComponentProvided, PortConfigurationProvided<T> portConfigurationProvided) {
-        //TODO
+    protected final <T> boolean unbind(PortComponentProvided<T> portComponentProvided, PortConfigurationProvided<T> portConfigurationProvided) {
+        if (bindings1.get(portComponentProvided) == portConfigurationProvided) {
+            bindings1.remove(portComponentProvided);
+            portComponentProvided.setConfiguration(friend, null);
+
+            return true;
+        }
+
+        return false;
     }
 
     /**
@@ -87,12 +114,16 @@ public abstract class Configuration implements ArchitecturalObject {
      * @param roleRequired
      * @param <T>
      */
-    protected final <T> void attach(PortComponentProvided<T> portComponentProvided, RoleRequired<T> roleRequired) {
-        //if (portComponentProvided != null && roleRequired != null && !attachments1.containsKey(portComponentProvided) && !attachments1.containsValue(roleRequired)) {
-        attachments1.put(portComponentProvided, roleRequired);
-        portComponentProvided.setConfiguration(friend, this);
-        roleRequired.setConfiguration(friend, this);
-        //}
+    protected final <T> boolean attach(PortComponentProvided<T> portComponentProvided, RoleRequired<T> roleRequired) {
+        if (portComponentProvided != null && roleRequired != null && !attachments1.containsKey(portComponentProvided)) {
+            attachments1.put(portComponentProvided, roleRequired);
+            portComponentProvided.setConfiguration(friend, this);
+            roleRequired.setConfiguration(friend, this);
+
+            return true;
+        }
+
+        return false;
     }
 
     /**
@@ -100,12 +131,16 @@ public abstract class Configuration implements ArchitecturalObject {
      * @param portComponentRequired
      * @param <T>
      */
-    protected final <T> void attach(RoleProvided<T> roleProvided, PortComponentRequired<T> portComponentRequired) {
-        //if (roleProvided != null && portComponentRequired != null && !attachments2.containsKey(roleProvided) && !attachments2.containsValue(portComponentRequired)) {
-        attachments2.put(roleProvided, portComponentRequired);
-        roleProvided.setConfiguration(friend, this);
-        portComponentRequired.setConfiguration(friend, this);
-        //}
+    protected final <T> boolean attach(RoleProvided<T> roleProvided, PortComponentRequired<T> portComponentRequired) {
+        if (roleProvided != null && portComponentRequired != null && !attachments2.containsKey(roleProvided)) {
+            attachments2.put(roleProvided, portComponentRequired);
+            roleProvided.setConfiguration(friend, this);
+            portComponentRequired.setConfiguration(friend, this);
+
+            return true;
+        }
+
+        return false;
     }
 
     /**
@@ -113,8 +148,16 @@ public abstract class Configuration implements ArchitecturalObject {
      * @param roleRequired
      * @param <T>
      */
-    protected final <T> void detach(PortComponentProvided<T> portComponentProvided, RoleRequired<T> roleRequired) {
-        //TODO
+    protected final <T> boolean detach(PortComponentProvided<T> portComponentProvided, RoleRequired<T> roleRequired) {
+        if (attachments1.get(portComponentProvided) == roleRequired) {
+            attachments1.remove(portComponentProvided);
+            portComponentProvided.setConfiguration(friend, null);
+            roleRequired.setConfiguration(friend, null);
+
+            return true;
+        }
+
+        return false;
     }
 
     /**
@@ -122,8 +165,16 @@ public abstract class Configuration implements ArchitecturalObject {
      * @param portComponentRequired
      * @param <T>
      */
-    protected final <T> void detach(RoleProvided<T> roleProvided, PortComponentRequired<T> portComponentRequired) {
-        //TODO
+    protected final <T> boolean detach(RoleProvided<T> roleProvided, PortComponentRequired<T> portComponentRequired) {
+        if (attachments2.get(roleProvided) == portComponentRequired) {
+            attachments2.remove(roleProvided);
+            roleProvided.setConfiguration(friend, null);
+            portComponentRequired.setConfiguration(friend, null);
+
+            return true;
+        }
+
+        return false;
     }
 
     /**
@@ -132,20 +183,26 @@ public abstract class Configuration implements ArchitecturalObject {
      * @param t
      * @param <T>
      */
-    public final <T> void read(PortComponentProvided.Friend friend, PortComponentProvided<T> portComponentProvided, T t) {
+    public final <T> boolean read(PortComponentProvided.Friend friend, PortComponentProvided<T> portComponentProvided, T t) {
         friend.hashCode();
 
-        /*attachments1.get(portComponentProvided).read(Configuration.friend, this, t);*/
+        boolean status = false;
+
         RoleRequired<T> roleRequired = attachments1.get(portComponentProvided);
         if (roleRequired != null) {
             roleRequired.read(Configuration.friend, this, t);
+
+            status = true;
         }
 
-        /*bindings1.get(portComponentProvided).read(Configuration.friend, this, t);*/
         PortConfigurationProvided<T> portConfigurationProvided = bindings1.get(portComponentProvided);
         if (portConfigurationProvided != null) {
-            portConfigurationProvided.read(Configuration.friend, this, t);
+            portConfigurationProvided.read(Configuration.friend, t);
+
+            status = true;
         }
+
+        return status;
     }
 
     /**
@@ -154,14 +211,17 @@ public abstract class Configuration implements ArchitecturalObject {
      * @param t
      * @param <T>
      */
-    public final <T> void read(PortConfigurationRequired.Friend friend, PortConfigurationRequired<T> portConfigurationRequired, T t) {
+    public final <T> boolean read(PortConfigurationRequired.Friend friend, PortConfigurationRequired<T> portConfigurationRequired, T t) {
         friend.hashCode();
 
-        /*bindings2.get(portConfigurationRequired).read(Configuration.friend, this, t);*/
         PortComponentRequired<T> portComponentRequired = bindings2.get(portConfigurationRequired);
         if (portComponentRequired != null) {
             portComponentRequired.read(Configuration.friend, this, t);
+
+            return true;
         }
+
+        return false;
     }
 
     /**
@@ -170,24 +230,30 @@ public abstract class Configuration implements ArchitecturalObject {
      * @param t
      * @param <T>
      */
-    public final <T> void read(RoleProvided.Friend friend, RoleProvided<T> roleProvided, T t) {
+    public final <T> boolean read(RoleProvided.Friend friend, RoleProvided<T> roleProvided, T t) {
         friend.hashCode();
 
-        /*attachments2.get(roleProvided).read(Configuration.friend, this, t);*/
         PortComponentRequired<T> portComponentRequired = attachments2.get(roleProvided);
         if (portComponentRequired != null) {
             portComponentRequired.read(Configuration.friend, this, t);
+
+            return true;
         }
+
+        return false;
     }
 
-    public final <T> void read(PortConfigurationProvided.Friend friend, PortConfigurationProvided<T> portConfigurationProvided, T t) {
+    public final <T> boolean read(PortConfigurationProvided.Friend friend, PortConfigurationProvided<T> portConfigurationProvided, T t) {
         friend.hashCode();
 
-        /*localBindings.get(portConfigurationProvided).read(Configuration.friend, this, t);*/
         PortConfigurationRequired<T> portConfigurationRequired = bridges.get(portConfigurationProvided);
         if (portConfigurationRequired != null) {
             portConfigurationRequired.read(Configuration.friend, t);
+
+            return true;
         }
+
+        return false;
     }
 
     /**

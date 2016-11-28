@@ -1,6 +1,5 @@
 package fr.univ.nantes.enfola.m2;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
 
@@ -21,7 +20,7 @@ public class PortConfigurationRequired<T> implements PortConfiguration<T> {
         super();
 
         this.configuration = configuration;
-        readers = new ArrayList<Reader<T>>();
+        readers = new HashSet<Reader<T>>();
         configurations = new HashSet<Configuration>();
     }
 

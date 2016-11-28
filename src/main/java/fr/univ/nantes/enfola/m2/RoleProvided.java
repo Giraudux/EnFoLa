@@ -47,12 +47,14 @@ public class RoleProvided<T> implements Role<T> {
      * @param glue
      * @param t
      */
-    public final void read(Glue.Friend friend, Glue glue, T t) {
+    public final boolean read(Glue.Friend friend, Glue glue, T t) {
         friend.hashCode();
 
-        if (this.glue == glue) {
-            configuration.read(RoleProvided.friend, this, t);
+        if (this.glue == glue && configuration != null) {
+            return configuration.read(RoleProvided.friend, this, t);
         }
+
+        return false;
     }
 
     /**

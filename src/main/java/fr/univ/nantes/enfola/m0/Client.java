@@ -19,7 +19,7 @@ public class Client implements Reader<String>, Writer<String> {
         system.getPortRequired().addReader(this);
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception {
         Client client = new Client();
 
         client.write("Bonjour la France!");

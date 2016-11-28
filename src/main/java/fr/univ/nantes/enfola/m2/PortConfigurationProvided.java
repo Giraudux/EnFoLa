@@ -19,13 +19,16 @@ public class PortConfigurationProvided<T> implements Writer<T>, PortConfiguratio
 
     /**
      * @param friend
-     * @param configuration
      * @param t
      */
-    public final void read(Configuration.Friend friend, Configuration configuration, T t) {
+    public final boolean read(Configuration.Friend friend, T t) {
         friend.hashCode();
 
-        this.configuration.read(PortConfigurationProvided.friend, this, t);
+        if (configuration != null) {
+            return configuration.read(PortConfigurationProvided.friend, this, t);
+        }
+
+        return false;
     }
 
     /**

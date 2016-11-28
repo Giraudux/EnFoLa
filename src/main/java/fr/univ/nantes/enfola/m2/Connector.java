@@ -1,8 +1,8 @@
 package fr.univ.nantes.enfola.m2;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
 
 /**
@@ -22,8 +22,8 @@ public abstract class Connector implements ArchitecturalObject {
         super();
 
         glues = new HashMap<RoleRequired, Glue>();
-        roleProvideds = new ArrayList<RoleProvided>();
-        roleRequireds = new ArrayList<RoleRequired>();
+        roleProvideds = new HashSet<RoleProvided>();
+        roleRequireds = new HashSet<RoleRequired>();
     }
 
     /**
@@ -101,6 +101,10 @@ public abstract class Connector implements ArchitecturalObject {
             glues.put(roleRequired, glue);
             glue.setRoleProvided(friend, this, roleProvided);
         }
+    }
+
+    protected final <R, W> void disconnect() {
+        //TODO
     }
 
     /**

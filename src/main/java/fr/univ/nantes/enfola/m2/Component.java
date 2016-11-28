@@ -1,7 +1,7 @@
 package fr.univ.nantes.enfola.m2;
 
-import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashSet;
 
 /**
  * @author Alexis Giraudet
@@ -18,8 +18,8 @@ public abstract class Component implements ArchitecturalObject {
     protected Component() {
         super();
 
-        portComponentProvideds = new ArrayList<PortComponentProvided>();
-        portComponentRequireds = new ArrayList<PortComponentRequired>();
+        portComponentProvideds = new HashSet<PortComponentProvided>();
+        portComponentRequireds = new HashSet<PortComponentRequired>();
     }
 
     /**
@@ -48,30 +48,6 @@ public abstract class Component implements ArchitecturalObject {
 
     /**
      * @param friend
-     * @param portComponentProvided
-     * @param <T>
-     * @return
-     */
-    public final <T> boolean removePortComponentProvided(PortComponentProvided.Friend friend, PortComponentProvided<T> portComponentProvided) {
-        friend.hashCode();
-
-        return portComponentProvideds.remove(portComponentProvided);
-    }
-
-    /**
-     * @param friend
-     * @param portComponentRequired
-     * @param <T>
-     * @return
-     */
-    public final <T> boolean removePortComponentRequired(PortComponentRequired.Friend friend, PortComponentRequired<T> portComponentRequired) {
-        friend.hashCode();
-
-        return portComponentRequireds.remove(portComponentRequired);
-    }
-
-    /**
-     * @param friend
      * @param portComponentRequired
      * @param t
      * @param <T>
@@ -96,10 +72,12 @@ public abstract class Component implements ArchitecturalObject {
      * @param t
      * @param <T>
      */
-    protected final <T> void write(PortComponentProvided<T> portComponentProvided, T t) {
+    protected final <T> boolean write(PortComponentProvided<T> portComponentProvided, T t) {
         if (portComponentProvideds.contains(portComponentProvided)) {
-            portComponentProvided.read(friend, this, t);
+            return portComponentProvided.read(friend, this, t);
         }
+
+        return false;
     }
 
     /**
