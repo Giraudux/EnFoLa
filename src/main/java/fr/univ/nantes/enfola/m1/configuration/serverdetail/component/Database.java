@@ -1,9 +1,15 @@
 package fr.univ.nantes.enfola.m1.configuration.serverdetail.component;
 
+import fr.univ.nantes.enfola.m1.bean.Query;
+import fr.univ.nantes.enfola.m1.bean.Reply;
 import fr.univ.nantes.enfola.m2.Component;
 import fr.univ.nantes.enfola.m2.PortComponentProvided;
 import fr.univ.nantes.enfola.m2.PortComponentRequired;
 
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
 import java.util.logging.Logger;
 
 /**
@@ -11,43 +17,72 @@ import java.util.logging.Logger;
  */
 public class Database extends Component {
     private final static Logger LOGGER = Logger.getLogger(Database.class.getName());
-    private final PortComponentProvided<String> portSqlRequestProvided;
-    private final PortComponentRequired<String> portSqlRequestRequired;
-    private final PortComponentProvided<String> portSecurityQueryProvided;
-    private final PortComponentRequired<String> portSecurityQueryRequired;
+    private final PortComponentProvided<Reply> portSqlRequestProvided;
+    private final PortComponentRequired<Query> portSqlRequestRequired;
+    private final PortComponentProvided<Reply> portSecurityQueryProvided;
+    private final PortComponentRequired<Query> portSecurityQueryRequired;
+    private Map<String,String> data;
+    private Collection<String> authorizedUsers;
 
     public Database() {
         super();
 
-        portSqlRequestProvided = new PortComponentProvided<String>(this);
-        portSqlRequestRequired = new PortComponentRequired<String>(this);
-        portSecurityQueryProvided = new PortComponentProvided<String>(this);
-        portSecurityQueryRequired = new PortComponentRequired<String>(this);
+        portSqlRequestProvided = new PortComponentProvided<Reply>(this);
+        portSqlRequestRequired = new PortComponentRequired<Query>(this);
+        portSecurityQueryProvided = new PortComponentProvided<Reply>(this);
+        portSecurityQueryRequired = new PortComponentRequired<Query>(this);
+
+        data = new HashMap<String, String>();
+        data.put("A", "1");
+        data.put("B", "2");
+        data.put("C", "3");
+
+        authorizedUsers = new HashSet<String>();
+        authorizedUsers.add("pierre");
+        authorizedUsers.add("alexis");
     }
 
     protected <T> void read(PortComponentRequired<T> portComponentRequired, T t) {
         LOGGER.info(t.toString());
+        Query query = (Query) t;
+        Reply reply = new Reply();
 
         if (portComponentRequired == portSecurityQueryRequired) {
-            write(portSqlRequestProvided, (String) t);
+            if(data.containsKey(query.getKey())) {
+                reply.setStatus(0);
+                reply.setMessage("database query SUCCESS");
+                reply.setValue(data.get(query.getKey()));
+            } else {
+                reply.setStatus(498);
+                reply.setMessage("database query FAILURE: invalid key");
+            }
+
+            write(portSqlRequestProvided, reply);
         } else if (portComponentRequired == portSqlRequestRequired) {
-            write(portSecurityQueryProvided, (String) t);
+            if(authorizedUsers.contains(query.getUsername())) {
+                reply.setMessage("database authorization SUCCESS");
+                reply.setStatus(0);
+            } else {
+                reply.setMessage("database authorization FAILURE: user not authorized");
+                reply.setStatus(457);
+            }
+            write(portSecurityQueryProvided, reply);
         }
     }
 
-    public PortComponentProvided<String> getPortSqlRequestProvided() {
+    public PortComponentProvided<Reply> getPortSqlRequestProvided() {
         return portSqlRequestProvided;
     }
 
-    public PortComponentRequired<String> getPortSqlRequestRequired() {
+    public PortComponentRequired<Query> getPortSqlRequestRequired() {
         return portSqlRequestRequired;
     }
 
-    public PortComponentProvided<String> getPortSecurityQueryProvided() {
+    public PortComponentProvided<Reply> getPortSecurityQueryProvided() {
         return portSecurityQueryProvided;
     }
 
-    public PortComponentRequired<String> getPortSecurityQueryRequired() {
+    public PortComponentRequired<Query> getPortSecurityQueryRequired() {
         return portSecurityQueryRequired;
     }
 }

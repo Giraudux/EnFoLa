@@ -1,5 +1,7 @@
 package fr.univ.nantes.enfola.m1.configuration.system.component;
 
+import fr.univ.nantes.enfola.m1.bean.Query;
+import fr.univ.nantes.enfola.m1.bean.Reply;
 import fr.univ.nantes.enfola.m2.Component;
 import fr.univ.nantes.enfola.m2.PortComponentProvided;
 import fr.univ.nantes.enfola.m2.PortComponentRequired;
@@ -11,43 +13,43 @@ import java.util.logging.Logger;
  */
 public class Server extends Component {
     private final static Logger LOGGER = Logger.getLogger(Server.class.getName());
-    private final PortComponentProvided<String> portRpcProvided;
-    private final PortComponentRequired<String> portRpcRequired;
-    private final PortComponentProvided<String> portServerDetailProvided;
-    private final PortComponentRequired<String> portServerDetailRequired;
+    private final PortComponentProvided<Reply> portRpcProvided;
+    private final PortComponentRequired<Query> portRpcRequired;
+    private final PortComponentProvided<Query> portServerDetailProvided;
+    private final PortComponentRequired<Reply> portServerDetailRequired;
 
     public Server() {
         super();
 
-        portRpcProvided = new PortComponentProvided<String>(this);
-        portRpcRequired = new PortComponentRequired<String>(this);
-        portServerDetailProvided = new PortComponentProvided<String>(this);
-        portServerDetailRequired = new PortComponentRequired<String>(this);
+        portRpcProvided = new PortComponentProvided<Reply>(this);
+        portRpcRequired = new PortComponentRequired<Query>(this);
+        portServerDetailProvided = new PortComponentProvided<Query>(this);
+        portServerDetailRequired = new PortComponentRequired<Reply>(this);
     }
 
     protected <T> void read(PortComponentRequired<T> portComponentRequired, T t) {
         LOGGER.info(t.toString());
 
         if (portComponentRequired == portRpcRequired) {
-            write(portServerDetailProvided, (String) t);
+            write(portServerDetailProvided, (Query) t);
         } else if (portComponentRequired == portServerDetailRequired) {
-            write(portRpcProvided, (String) t);
+            write(portRpcProvided, (Reply) t);
         }
     }
 
-    public PortComponentProvided<String> getPortRpcProvided() {
+    public PortComponentProvided<Reply> getPortRpcProvided() {
         return portRpcProvided;
     }
 
-    public PortComponentRequired<String> getPortRpcRequired() {
+    public PortComponentRequired<Query> getPortRpcRequired() {
         return portRpcRequired;
     }
 
-    public PortComponentProvided<String> getPortServerDetailProvided() {
+    public PortComponentProvided<Query> getPortServerDetailProvided() {
         return portServerDetailProvided;
     }
 
-    public PortComponentRequired<String> getPortServerDetailRequired() {
+    public PortComponentRequired<Reply> getPortServerDetailRequired() {
         return portServerDetailRequired;
     }
 }

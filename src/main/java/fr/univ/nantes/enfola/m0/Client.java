@@ -1,20 +1,16 @@
 package fr.univ.nantes.enfola.m0;
 
-import fr.univ.nantes.enfola.m1.configuration.system.System;
 import fr.univ.nantes.enfola.m2.Reader;
 import fr.univ.nantes.enfola.m2.Writer;
-
-import java.util.logging.Logger;
 
 /**
  * @author Alexis Giraudet
  */
-public class Client implements Reader<String>, Writer<String> {
-    private final static Logger LOGGER = Logger.getLogger(Client.class.getName());
-    private System system;
+public class Client implements Reader<String>, Writer<String[]> {
+    private fr.univ.nantes.enfola.m1.configuration.system.System system;
 
     public Client() {
-        system = new System();
+        system = new fr.univ.nantes.enfola.m1.configuration.system.System();
 
         system.getPortRequired().addReader(this);
     }
@@ -22,16 +18,17 @@ public class Client implements Reader<String>, Writer<String> {
     public static void main(String[] args) throws Exception {
         Client client = new Client();
 
-        client.write("Bonjour la France!");
+        args = new String[] {"alexis", "giraudet", "P"};
+        client.write(args);
     }
 
     @Override
     public void read(String s) {
-        LOGGER.info(s);
+        System.out.println(s);
     }
 
     @Override
-    public void write(String s) {
-        system.getPortProvided().write(s);
+    public void write(String[] args) {
+        system.getPortProvided().write(args);
     }
 }

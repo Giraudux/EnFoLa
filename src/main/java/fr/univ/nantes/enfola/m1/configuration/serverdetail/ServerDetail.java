@@ -1,5 +1,7 @@
 package fr.univ.nantes.enfola.m1.configuration.serverdetail;
 
+import fr.univ.nantes.enfola.m1.bean.Query;
+import fr.univ.nantes.enfola.m1.bean.Reply;
 import fr.univ.nantes.enfola.m1.configuration.serverdetail.component.ConnectionManager;
 import fr.univ.nantes.enfola.m1.configuration.serverdetail.component.Database;
 import fr.univ.nantes.enfola.m1.configuration.serverdetail.component.SecurityManager;
@@ -14,10 +16,10 @@ import fr.univ.nantes.enfola.m2.PortConfigurationRequired;
  * @author Alexis Giraudet
  */
 public class ServerDetail extends Configuration {
-    private final PortConfigurationProvided<String> portProvided;
-    private final PortConfigurationRequired<String> portRequired;
-    private final PortConfigurationProvided<String> portConnectionManagerProvided;
-    private final PortConfigurationRequired<String> portConnectionManagerRequired;
+    private final PortConfigurationProvided<Query> portProvided;
+    private final PortConfigurationRequired<Reply> portRequired;
+    private final PortConfigurationProvided<Reply> portConnectionManagerProvided;
+    private final PortConfigurationRequired<Query> portConnectionManagerRequired;
     private ConnectionManager connectionManager;
     private Database database;
     private SecurityManager securityManager;
@@ -28,10 +30,10 @@ public class ServerDetail extends Configuration {
     public ServerDetail() {
         super();
 
-        portProvided = new PortConfigurationProvided<String>(this);
-        portRequired = new PortConfigurationRequired<String>(this);
-        portConnectionManagerProvided = new PortConfigurationProvided<String>(this);
-        portConnectionManagerRequired = new PortConfigurationRequired<String>(this);
+        portProvided = new PortConfigurationProvided<Query>(this);
+        portRequired = new PortConfigurationRequired<Reply>(this);
+        portConnectionManagerProvided = new PortConfigurationProvided<Reply>(this);
+        portConnectionManagerRequired = new PortConfigurationRequired<Query>(this);
 
         connectionManager = new ConnectionManager();
         database = new Database();
@@ -73,11 +75,11 @@ public class ServerDetail extends Configuration {
 
     }
 
-    public PortConfigurationProvided<String> getPortProvided() {
+    public PortConfigurationProvided<Query> getPortProvided() {
         return portProvided;
     }
 
-    public PortConfigurationRequired<String> getPortRequired() {
+    public PortConfigurationRequired<Reply> getPortRequired() {
         return portRequired;
     }
 }

@@ -11,18 +11,18 @@ import java.util.logging.Logger;
  */
 public class Client extends Component {
     private final static Logger LOGGER = Logger.getLogger(Client.class.getName());
-    private final PortComponentProvided<String> portRpcProvided;
+    private final PortComponentProvided<String[]> portRpcProvided;
     private final PortComponentRequired<String> portRpcRequired;
     private final PortComponentProvided<String> portSystemProvided;
-    private final PortComponentRequired<String> portSystemRequired;
+    private final PortComponentRequired<String[]> portSystemRequired;
 
     public Client() {
         super();
 
-        portRpcProvided = new PortComponentProvided<String>(this);
+        portRpcProvided = new PortComponentProvided<String[]>(this);
         portRpcRequired = new PortComponentRequired<String>(this);
         portSystemProvided = new PortComponentProvided<String>(this);
-        portSystemRequired = new PortComponentRequired<String>(this);
+        portSystemRequired = new PortComponentRequired<String[]>(this);
     }
 
     protected <T> void read(PortComponentRequired<T> portComponentRequired, T t) {
@@ -31,11 +31,11 @@ public class Client extends Component {
         if (portComponentRequired == portRpcRequired) {
             write(portSystemProvided, (String) t);
         } else if (portComponentRequired == portSystemRequired) {
-            write(portRpcProvided, (String) t);
+            write(portRpcProvided, (String[]) t);
         }
     }
 
-    public PortComponentProvided<String> getPortRpcProvided() {
+    public PortComponentProvided<String[]> getPortRpcProvided() {
         return portRpcProvided;
     }
 
@@ -47,7 +47,7 @@ public class Client extends Component {
         return portSystemProvided;
     }
 
-    public PortComponentRequired<String> getPortSystemRequired() {
+    public PortComponentRequired<String[]> getPortSystemRequired() {
         return portSystemRequired;
     }
 }

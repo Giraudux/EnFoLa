@@ -12,10 +12,10 @@ import fr.univ.nantes.enfola.m2.PortConfigurationRequired;
  * @author Alexis Giraudet
  */
 public class System extends Configuration {
-    private final PortConfigurationProvided<String> portProvided;
+    private final PortConfigurationProvided<String[]> portProvided;
     private final PortConfigurationRequired<String> portRequired;
     private final PortConfigurationProvided<String> portClientProvided;
-    private final PortConfigurationRequired<String> portClientRequired;
+    private final PortConfigurationRequired<String[]> portClientRequired;
     private Client client;
     private Rpc rpc;
     private Server server;
@@ -24,10 +24,10 @@ public class System extends Configuration {
     public System() {
         super();
 
-        portProvided = new PortConfigurationProvided<String>(this);
+        portProvided = new PortConfigurationProvided<String[]>(this);
         portRequired = new PortConfigurationRequired<String>(this);
         portClientProvided = new PortConfigurationProvided<String>(this);
-        portClientRequired = new PortConfigurationRequired<String>(this);
+        portClientRequired = new PortConfigurationRequired<String[]>(this);
 
         client = new Client();
         rpc = new Rpc();
@@ -53,7 +53,7 @@ public class System extends Configuration {
         bind(serverDetail.getPortRequired(), server.getPortServerDetailRequired());
     }
 
-    public PortConfigurationProvided<String> getPortProvided() {
+    public PortConfigurationProvided<String[]> getPortProvided() {
         return portProvided;
     }
 

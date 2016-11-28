@@ -1,5 +1,7 @@
 package fr.univ.nantes.enfola.m1.configuration.system.connector;
 
+import fr.univ.nantes.enfola.m1.bean.Query;
+import fr.univ.nantes.enfola.m1.bean.Reply;
 import fr.univ.nantes.enfola.m2.Connector;
 import fr.univ.nantes.enfola.m2.Glue;
 import fr.univ.nantes.enfola.m2.RoleProvided;
@@ -13,19 +15,19 @@ import java.util.logging.Logger;
 public class Rpc extends Connector {
     private final static Logger LOGGER = Logger.getLogger(Rpc.class.getName());
     private final RoleProvided<String> roleClientProvided;
-    private final RoleProvided<String> roleServerProvided;
-    private final RoleRequired<String> roleClientRequired;
-    private final RoleRequired<String> roleServerRequired;
-    private Glue<String, String> clientToServer;
-    private Glue<String, String> serverToClient;
+    private final RoleProvided<Query> roleServerProvided;
+    private final RoleRequired<String[]> roleClientRequired;
+    private final RoleRequired<Reply> roleServerRequired;
+    private Glue<String[], Query> clientToServer;
+    private Glue<Reply, String> serverToClient;
 
     public Rpc() {
         super();
 
         roleClientProvided = new RoleProvided<String>(this);
-        roleServerProvided = new RoleProvided<String>(this);
-        roleClientRequired = new RoleRequired<String>(this);
-        roleServerRequired = new RoleRequired<String>(this);
+        roleServerProvided = new RoleProvided<Query>(this);
+        roleClientRequired = new RoleRequired<String[]>(this);
+        roleServerRequired = new RoleRequired<Reply>(this);
         clientToServer = new GlueClientToServer();
         serverToClient = new GlueServerToClient();
 
@@ -37,39 +39,53 @@ public class Rpc extends Connector {
         return roleClientProvided;
     }
 
-    public RoleProvided<String> getRoleServerProvided() {
+    public RoleProvided<Query> getRoleServerProvided() {
         return roleServerProvided;
     }
 
-    public RoleRequired<String> getRoleClientRequired() {
+    public RoleRequired<String[]> getRoleClientRequired() {
         return roleClientRequired;
     }
 
-    public RoleRequired<String> getRoleServerRequired() {
+    public RoleRequired<Reply> getRoleServerRequired() {
         return roleServerRequired;
     }
 
-    private class GlueServerToClient extends Glue<String, String> {
+    private class GlueServerToClient extends Glue<Reply, String> {
         private GlueServerToClient() {
             super(Rpc.this);
         }
 
-        protected String transform(String s) {
-            LOGGER.info(s);
+        protected String transform(Reply s) {
+            LOGGER.info(s.toString());
 
-            return s;
+            return s.toString();
         }
     }
 
-    private class GlueClientToServer extends Glue<String, String> {
+    private class GlueClientToServer extends Glue<String[], Query> {
         private GlueClientToServer() {
             super(Rpc.this);
         }
 
-        protected String transform(String s) {
-            LOGGER.info(s);
+        protected Query transform(String[] s) {
+            LOGGER.info(s.toString());
 
-            return s;
+            Query query = new Query();
+
+            if(s.length > 0) {
+                query.setUsername(s[0]);
+
+                if(s.length > 1) {
+                    query.setPassword(s[1]);
+
+                    if(s.length > 2) {
+                        query.setKey(s[2]);
+                    }
+                }
+            }
+
+            return query;
         }
     }
 }

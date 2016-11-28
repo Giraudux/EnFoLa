@@ -1,5 +1,7 @@
 package fr.univ.nantes.enfola.m1.configuration.serverdetail.connector;
 
+import fr.univ.nantes.enfola.m1.bean.Query;
+import fr.univ.nantes.enfola.m1.bean.Reply;
 import fr.univ.nantes.enfola.m2.Connector;
 import fr.univ.nantes.enfola.m2.Glue;
 import fr.univ.nantes.enfola.m2.RoleProvided;
@@ -12,20 +14,20 @@ import java.util.logging.Logger;
  */
 public class SecurityQuery extends Connector {
     private final static Logger LOGGER = Logger.getLogger(SecurityQuery.class.getName());
-    private final RoleProvided<String> roleDatabaseProvided;
-    private final RoleRequired<String> roleDatabaseRequired;
-    private final RoleProvided<String> roleSecurityManagerProvided;
-    private final RoleRequired<String> roleSecurityManagerRequired;
-    private Glue<String, String> databaseToSecurityManager;
-    private Glue<String, String> securityManagerToDatabase;
+    private final RoleProvided<Query> roleDatabaseProvided;
+    private final RoleRequired<Reply> roleDatabaseRequired;
+    private final RoleProvided<Reply> roleSecurityManagerProvided;
+    private final RoleRequired<Query> roleSecurityManagerRequired;
+    private Glue<Reply, Reply> databaseToSecurityManager;
+    private Glue<Query, Query> securityManagerToDatabase;
 
     public SecurityQuery() {
         super();
 
-        roleDatabaseProvided = new RoleProvided<String>(this);
-        roleDatabaseRequired = new RoleRequired<String>(this);
-        roleSecurityManagerProvided = new RoleProvided<String>(this);
-        roleSecurityManagerRequired = new RoleRequired<String>(this);
+        roleDatabaseProvided = new RoleProvided<Query>(this);
+        roleDatabaseRequired = new RoleRequired<Reply>(this);
+        roleSecurityManagerProvided = new RoleProvided<Reply>(this);
+        roleSecurityManagerRequired = new RoleRequired<Query>(this);
         databaseToSecurityManager = new DatabaseToSecurityManager();
         securityManagerToDatabase = new SecurityManagerToDatabase();
 
@@ -33,43 +35,43 @@ public class SecurityQuery extends Connector {
         connect(roleSecurityManagerRequired, securityManagerToDatabase, roleDatabaseProvided);
     }
 
-    public RoleProvided<String> getRoleDatabaseProvided() {
+    public RoleProvided<Query> getRoleDatabaseProvided() {
         return roleDatabaseProvided;
     }
 
-    public RoleRequired<String> getRoleDatabaseRequired() {
+    public RoleRequired<Reply> getRoleDatabaseRequired() {
         return roleDatabaseRequired;
     }
 
-    public RoleProvided<String> getRoleSecurityManagerProvided() {
+    public RoleProvided<Reply> getRoleSecurityManagerProvided() {
         return roleSecurityManagerProvided;
     }
 
-    public RoleRequired<String> getRoleSecurityManagerRequired() {
+    public RoleRequired<Query> getRoleSecurityManagerRequired() {
         return roleSecurityManagerRequired;
     }
 
-    private class DatabaseToSecurityManager extends Glue<String, String> {
+    private class DatabaseToSecurityManager extends Glue<Reply, Reply> {
         protected DatabaseToSecurityManager() {
             super(SecurityQuery.this);
         }
 
         @Override
-        protected String transform(String s) {
-            LOGGER.info(s);
+        protected Reply transform(Reply s) {
+            LOGGER.info(s.toString());
 
             return s;
         }
     }
 
-    private class SecurityManagerToDatabase extends Glue<String, String> {
+    private class SecurityManagerToDatabase extends Glue<Query, Query> {
         protected SecurityManagerToDatabase() {
             super(SecurityQuery.this);
         }
 
         @Override
-        protected String transform(String s) {
-            LOGGER.info(s);
+        protected Query transform(Query s) {
+            LOGGER.info(s.toString());
 
             return s;
         }
